@@ -1,0 +1,488 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CF3CFC8519111B03000C7C83 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF3CFC8419111B03000C7C83 /* Foundation.framework */; };
+		CF3CFC8719111B03000C7C83 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF3CFC8619111B03000C7C83 /* CoreGraphics.framework */; };
+		CF3CFC8919111B03000C7C83 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF3CFC8819111B03000C7C83 /* UIKit.framework */; };
+		CF3CFC8F19111B03000C7C83 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CF3CFC8D19111B03000C7C83 /* InfoPlist.strings */; };
+		CF3CFC9119111B03000C7C83 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CF3CFC9019111B03000C7C83 /* main.m */; };
+		CF3CFC9519111B03000C7C83 /* TnTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CF3CFC9419111B03000C7C83 /* TnTAppDelegate.m */; };
+		CF3CFC9819111B03000C7C83 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF3CFC9619111B03000C7C83 /* Main_iPhone.storyboard */; };
+		CF3CFC9B19111B03000C7C83 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF3CFC9919111B03000C7C83 /* Main_iPad.storyboard */; };
+		CF3CFCA019111B03000C7C83 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF3CFC9F19111B03000C7C83 /* Images.xcassets */; };
+		CF3CFCA719111B03000C7C83 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF3CFCA619111B03000C7C83 /* XCTest.framework */; };
+		CF3CFCA819111B03000C7C83 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF3CFC8419111B03000C7C83 /* Foundation.framework */; };
+		CF3CFCA919111B03000C7C83 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF3CFC8819111B03000C7C83 /* UIKit.framework */; };
+		CF3CFCB119111B03000C7C83 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CF3CFCAF19111B03000C7C83 /* InfoPlist.strings */; };
+		CF3CFCB319111B03000C7C83 /* TipsAndTricksCFNetworkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CF3CFCB219111B03000C7C83 /* TipsAndTricksCFNetworkTests.m */; };
+		CF3CFCC1191128FB000C7C83 /* TnTTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF3CFCC0191128FB000C7C83 /* TnTTableViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CF3CFCAA19111B03000C7C83 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CF3CFC7919111B03000C7C83 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CF3CFC8019111B03000C7C83;
+			remoteInfo = TipsAndTricksCFNetwork;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		CF3CFC8119111B03000C7C83 /* TipsAndTricksCFNetwork.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TipsAndTricksCFNetwork.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF3CFC8419111B03000C7C83 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		CF3CFC8619111B03000C7C83 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		CF3CFC8819111B03000C7C83 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		CF3CFC8C19111B03000C7C83 /* TipsAndTricksCFNetwork-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TipsAndTricksCFNetwork-Info.plist"; sourceTree = "<group>"; };
+		CF3CFC8E19111B03000C7C83 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CF3CFC9019111B03000C7C83 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		CF3CFC9219111B03000C7C83 /* TipsAndTricksCFNetwork-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TipsAndTricksCFNetwork-Prefix.pch"; sourceTree = "<group>"; };
+		CF3CFC9319111B03000C7C83 /* TnTAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TnTAppDelegate.h; sourceTree = "<group>"; };
+		CF3CFC9419111B03000C7C83 /* TnTAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TnTAppDelegate.m; sourceTree = "<group>"; };
+		CF3CFC9719111B03000C7C83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
+		CF3CFC9A19111B03000C7C83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
+		CF3CFC9F19111B03000C7C83 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		CF3CFCA519111B03000C7C83 /* TipsAndTricksCFNetworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TipsAndTricksCFNetworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF3CFCA619111B03000C7C83 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		CF3CFCAE19111B03000C7C83 /* TipsAndTricksCFNetworkTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TipsAndTricksCFNetworkTests-Info.plist"; sourceTree = "<group>"; };
+		CF3CFCB019111B03000C7C83 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CF3CFCB219111B03000C7C83 /* TipsAndTricksCFNetworkTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TipsAndTricksCFNetworkTests.m; sourceTree = "<group>"; };
+		CF3CFCBF191128FB000C7C83 /* TnTTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TnTTableViewController.h; path = ../TnTTableViewController.h; sourceTree = "<group>"; };
+		CF3CFCC0191128FB000C7C83 /* TnTTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TnTTableViewController.m; path = ../TnTTableViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CF3CFC7E19111B03000C7C83 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF3CFC8719111B03000C7C83 /* CoreGraphics.framework in Frameworks */,
+				CF3CFC8919111B03000C7C83 /* UIKit.framework in Frameworks */,
+				CF3CFC8519111B03000C7C83 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CF3CFCA219111B03000C7C83 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF3CFCA719111B03000C7C83 /* XCTest.framework in Frameworks */,
+				CF3CFCA919111B03000C7C83 /* UIKit.framework in Frameworks */,
+				CF3CFCA819111B03000C7C83 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CF3CFC7819111B03000C7C83 = {
+			isa = PBXGroup;
+			children = (
+				CF3CFC8A19111B03000C7C83 /* TipsAndTricksCFNetwork */,
+				CF3CFCAC19111B03000C7C83 /* TipsAndTricksCFNetworkTests */,
+				CF3CFC8319111B03000C7C83 /* Frameworks */,
+				CF3CFC8219111B03000C7C83 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CF3CFC8219111B03000C7C83 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CF3CFC8119111B03000C7C83 /* TipsAndTricksCFNetwork.app */,
+				CF3CFCA519111B03000C7C83 /* TipsAndTricksCFNetworkTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CF3CFC8319111B03000C7C83 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CF3CFC8419111B03000C7C83 /* Foundation.framework */,
+				CF3CFC8619111B03000C7C83 /* CoreGraphics.framework */,
+				CF3CFC8819111B03000C7C83 /* UIKit.framework */,
+				CF3CFCA619111B03000C7C83 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CF3CFC8A19111B03000C7C83 /* TipsAndTricksCFNetwork */ = {
+			isa = PBXGroup;
+			children = (
+				CF3CFCBF191128FB000C7C83 /* TnTTableViewController.h */,
+				CF3CFCC0191128FB000C7C83 /* TnTTableViewController.m */,
+				CF3CFC9619111B03000C7C83 /* Main_iPhone.storyboard */,
+				CF3CFC9919111B03000C7C83 /* Main_iPad.storyboard */,
+				CF3CFC9F19111B03000C7C83 /* Images.xcassets */,
+				CF3CFC8B19111B03000C7C83 /* Supporting Files */,
+			);
+			path = TipsAndTricksCFNetwork;
+			sourceTree = "<group>";
+		};
+		CF3CFC8B19111B03000C7C83 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CF3CFC9319111B03000C7C83 /* TnTAppDelegate.h */,
+				CF3CFC9419111B03000C7C83 /* TnTAppDelegate.m */,
+				CF3CFC8C19111B03000C7C83 /* TipsAndTricksCFNetwork-Info.plist */,
+				CF3CFC8D19111B03000C7C83 /* InfoPlist.strings */,
+				CF3CFC9019111B03000C7C83 /* main.m */,
+				CF3CFC9219111B03000C7C83 /* TipsAndTricksCFNetwork-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CF3CFCAC19111B03000C7C83 /* TipsAndTricksCFNetworkTests */ = {
+			isa = PBXGroup;
+			children = (
+				CF3CFCB219111B03000C7C83 /* TipsAndTricksCFNetworkTests.m */,
+				CF3CFCAD19111B03000C7C83 /* Supporting Files */,
+			);
+			path = TipsAndTricksCFNetworkTests;
+			sourceTree = "<group>";
+		};
+		CF3CFCAD19111B03000C7C83 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CF3CFCAE19111B03000C7C83 /* TipsAndTricksCFNetworkTests-Info.plist */,
+				CF3CFCAF19111B03000C7C83 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CF3CFC8019111B03000C7C83 /* TipsAndTricksCFNetwork */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CF3CFCB619111B03000C7C83 /* Build configuration list for PBXNativeTarget "TipsAndTricksCFNetwork" */;
+			buildPhases = (
+				CF3CFC7D19111B03000C7C83 /* Sources */,
+				CF3CFC7E19111B03000C7C83 /* Frameworks */,
+				CF3CFC7F19111B03000C7C83 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TipsAndTricksCFNetwork;
+			productName = TipsAndTricksCFNetwork;
+			productReference = CF3CFC8119111B03000C7C83 /* TipsAndTricksCFNetwork.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CF3CFCA419111B03000C7C83 /* TipsAndTricksCFNetworkTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CF3CFCB919111B03000C7C83 /* Build configuration list for PBXNativeTarget "TipsAndTricksCFNetworkTests" */;
+			buildPhases = (
+				CF3CFCA119111B03000C7C83 /* Sources */,
+				CF3CFCA219111B03000C7C83 /* Frameworks */,
+				CF3CFCA319111B03000C7C83 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CF3CFCAB19111B03000C7C83 /* PBXTargetDependency */,
+			);
+			name = TipsAndTricksCFNetworkTests;
+			productName = TipsAndTricksCFNetworkTests;
+			productReference = CF3CFCA519111B03000C7C83 /* TipsAndTricksCFNetworkTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CF3CFC7919111B03000C7C83 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = TnT;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Vivek Pandya";
+				TargetAttributes = {
+					CF3CFCA419111B03000C7C83 = {
+						TestTargetID = CF3CFC8019111B03000C7C83;
+					};
+				};
+			};
+			buildConfigurationList = CF3CFC7C19111B03000C7C83 /* Build configuration list for PBXProject "TipsAndTricksCFNetwork" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CF3CFC7819111B03000C7C83;
+			productRefGroup = CF3CFC8219111B03000C7C83 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CF3CFC8019111B03000C7C83 /* TipsAndTricksCFNetwork */,
+				CF3CFCA419111B03000C7C83 /* TipsAndTricksCFNetworkTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CF3CFC7F19111B03000C7C83 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF3CFC9B19111B03000C7C83 /* Main_iPad.storyboard in Resources */,
+				CF3CFCA019111B03000C7C83 /* Images.xcassets in Resources */,
+				CF3CFC9819111B03000C7C83 /* Main_iPhone.storyboard in Resources */,
+				CF3CFC8F19111B03000C7C83 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CF3CFCA319111B03000C7C83 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF3CFCB119111B03000C7C83 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CF3CFC7D19111B03000C7C83 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF3CFC9119111B03000C7C83 /* main.m in Sources */,
+				CF3CFC9519111B03000C7C83 /* TnTAppDelegate.m in Sources */,
+				CF3CFCC1191128FB000C7C83 /* TnTTableViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CF3CFCA119111B03000C7C83 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CF3CFCB319111B03000C7C83 /* TipsAndTricksCFNetworkTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CF3CFCAB19111B03000C7C83 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CF3CFC8019111B03000C7C83 /* TipsAndTricksCFNetwork */;
+			targetProxy = CF3CFCAA19111B03000C7C83 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		CF3CFC8D19111B03000C7C83 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CF3CFC8E19111B03000C7C83 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		CF3CFC9619111B03000C7C83 /* Main_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CF3CFC9719111B03000C7C83 /* Base */,
+			);
+			name = Main_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		CF3CFC9919111B03000C7C83 /* Main_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CF3CFC9A19111B03000C7C83 /* Base */,
+			);
+			name = Main_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		CF3CFCAF19111B03000C7C83 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CF3CFCB019111B03000C7C83 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		CF3CFCB419111B03000C7C83 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CF3CFCB519111B03000C7C83 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CF3CFCB719111B03000C7C83 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TipsAndTricksCFNetwork/TipsAndTricksCFNetwork-Prefix.pch";
+				INFOPLIST_FILE = "TipsAndTricksCFNetwork/TipsAndTricksCFNetwork-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		CF3CFCB819111B03000C7C83 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TipsAndTricksCFNetwork/TipsAndTricksCFNetwork-Prefix.pch";
+				INFOPLIST_FILE = "TipsAndTricksCFNetwork/TipsAndTricksCFNetwork-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		CF3CFCBA19111B03000C7C83 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TipsAndTricksCFNetwork.app/TipsAndTricksCFNetwork";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TipsAndTricksCFNetwork/TipsAndTricksCFNetwork-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "TipsAndTricksCFNetworkTests/TipsAndTricksCFNetworkTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		CF3CFCBB19111B03000C7C83 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TipsAndTricksCFNetwork.app/TipsAndTricksCFNetwork";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TipsAndTricksCFNetwork/TipsAndTricksCFNetwork-Prefix.pch";
+				INFOPLIST_FILE = "TipsAndTricksCFNetworkTests/TipsAndTricksCFNetworkTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CF3CFC7C19111B03000C7C83 /* Build configuration list for PBXProject "TipsAndTricksCFNetwork" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CF3CFCB419111B03000C7C83 /* Debug */,
+				CF3CFCB519111B03000C7C83 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CF3CFCB619111B03000C7C83 /* Build configuration list for PBXNativeTarget "TipsAndTricksCFNetwork" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CF3CFCB719111B03000C7C83 /* Debug */,
+				CF3CFCB819111B03000C7C83 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CF3CFCB919111B03000C7C83 /* Build configuration list for PBXNativeTarget "TipsAndTricksCFNetworkTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CF3CFCBA19111B03000C7C83 /* Debug */,
+				CF3CFCBB19111B03000C7C83 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CF3CFC7919111B03000C7C83 /* Project object */;
+}
