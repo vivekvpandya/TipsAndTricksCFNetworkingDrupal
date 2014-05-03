@@ -10,12 +10,13 @@
 //
 
 #import "TnTLinuxTableViewController.h"
+#import "TipsandTricks.h"
+#import "TnTViewController.h"
 
 @interface TnTLinuxTableViewController ()
 
 @property (nonatomic,strong) NSURLSession *session; // to hold NSURLSession object
-@property (nonatomic,strong) NSArray *titles;  // Titles retrieved form Drupal site
-@property (nonatomic,strong) NSArray *creationDateTime; // Creation time retrieved from Drupal site
+@property (nonatomic,strong) NSArray *tipList; // to hold NSDictionaries that are created with JSON Response and each NSDictionary represent tip object i.e it will contain all the fields which you have enabled from RESTExport for the view
 
 
 
@@ -28,8 +29,10 @@
     
     // this method creates NSURLRequest for appropriate URL and than create NSURLSessionData task to GET data.
     
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost/drupal8/rest/linuxTips"]];
+    NSURL *urlForLinuxTips = [TipsandTricks createURLForPath:@"rest/linuxTips"];
     
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:urlForLinuxTips];
+    [request setHTTPMethod:@"GET"];
     if (self.session){
         
         
@@ -44,16 +47,13 @@
                 
                 if (!error) {
                     
-                    NSDictionary *dataDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:NULL];
+                   
                     
                   //Once data is retrieved dispatch back to main queue to adjust UI
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        
-                        self.titles = [dataDic valueForKey:@"title"];
-                        self.creationDateTime = [dataDic valueForKey:@"created"];
-                        
-                       // stop UITableViewController's refreshControl animation
+                       self.tipList = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:NULL];
+                                               // stop UITableViewController's refreshControl animation
                         [self.refreshControl endRefreshing];
                     });
 
@@ -100,13 +100,13 @@
     
 }
 
--(void)setTitles:(NSArray *)titles{
-    
-    // self.titles lazy instantiating
-    _titles = titles;
-    [self.tableView reloadData]; // whenever self.titles is got set than relode the tableview.
-}
+-(void)setTipList:(NSArray *)tipList{
 
+
+    _tipList = tipList;
+    [self.tableView reloadData];
+
+}
 
 
 -(NSURLSession *)session{
@@ -115,6 +115,7 @@
         //creating session object if not exist.
         // To configure session object use NSURLSessionConfiguration , ephemeralSessionConfiguration is very basic configuration object.
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration ephemeralSessionConfiguration];
+        [config setHTTPAdditionalHeaders:@{@"Accept":@"application/json"}];
         _session = [NSURLSession sessionWithConfiguration:config];
         
         
@@ -147,7 +148,7 @@
 {
     // Return the number of rows in the section.
     
-    return [self.titles count];
+    return [self.tipList count];
 }
 
 
@@ -155,10 +156,11 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Linux List Cell" forIndexPath:indexPath];
     
-    cell.textLabel.text = [self.titles objectAtIndex:indexPath.row];
-    cell.detailTextLabel.text = [self.creationDateTime objectAtIndex:indexPath.row];
+    cell.textLabel.text = [[self.tipList objectAtIndex:indexPath.row] objectForKey:@"title"];
+    cell.detailTextLabel.text = [[self.tipList objectAtIndex:indexPath.row] objectForKey:@"created"];
     return cell;
 }
+
 
 
 /*
@@ -203,11 +205,26 @@
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+ 
+ */
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+
+
+    if ([sender isKindOfClass:[UITableViewCell class]]) {
+        
+        if ([segue.destinationViewController isKindOfClass:[TnTViewController class]]) {
+            
+            if ([segue.identifier isEqualToString:@"push"]) {
+                
+                TnTViewController *newVC = (TnTViewController *)segue.destinationViewController;
+                newVC.tip = [self.tipList objectAtIndex:[self.tableView indexPathForCell:sender].row];
+                
+            }
+        }
+    }
+    
+
 }
-*/
 
 @end
