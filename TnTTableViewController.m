@@ -37,17 +37,33 @@
         dispatch_async(fatchQ, ^{
             
             NSURLSessionDataTask *getRequestTask = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                if (!error) {
-                    
                 
-               
+                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                NSDictionary *headres = [httpResponse allHeaderFields];
+                if (!error && httpResponse.statusCode == 200 ) {
+                    
+                  
+               NSLog(@"%d",httpResponse.statusCode);
                     
                     //Once data is retrieved dispatch back to main queue to adjust UI
 
             
                 dispatch_async(dispatch_get_main_queue(), ^{
-                     self.tipList = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:NULL];
+                    NSArray *retrivedJSONObjectArray = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:NULL];
+                    if (retrivedJSONObjectArray == nil) {
+                        
+                        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error"
+                                                                       message:@"Some thing has gone wrong"
+                                                                      delegate:nil
+                                                             cancelButtonTitle:nil
+                                                             otherButtonTitles:@"OK", nil];
+                        
+                        [alert show];
+                    }
+                    else{
                     
+                        self.tipList = retrivedJSONObjectArray;
+                    }
                     
                     // stop UITableViewController's refreshControl animation
                     [self.refreshControl endRefreshing];
@@ -57,13 +73,27 @@
                 else {
                      // dataTask is not complited due to error
                     
+                    NSString *errorDescription = [[NSString alloc]init];
+                    
+                    switch (httpResponse.statusCode) {
+                        case 404:
+                          errorDescription = @" The requested URL was not found on this server. ";
+                            break;
+                        case 0:
+                            errorDescription = @"Could not get any response, It seems could not connect to the sever. ";
+                            break;
+                        default:
+                            break;
+                    }
+                    
+                    
                     dispatch_async(dispatch_get_main_queue(), ^{
                     
                         // provide user a alert about error
 
                         [self.refreshControl endRefreshing];
                         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error"
-                                                                       message:error.localizedDescription
+                                                                       message:errorDescription
                                                                       delegate:nil
                                                              cancelButtonTitle:nil
                                                              otherButtonTitles:@"OK", nil];

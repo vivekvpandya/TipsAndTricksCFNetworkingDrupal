@@ -27,61 +27,90 @@
 -(IBAction)getData{
     
     
+    
     // this method creates NSURLRequest for appropriate URL and than create NSURLSessionData task to GET data.
-    
-    NSURL *urlForLinuxTips = [TipsandTricks createURLForPath:@"rest/linuxTips"];
-    
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:urlForLinuxTips];
+    NSMutableURLRequest *request =  [[NSMutableURLRequest alloc]initWithURL:[TipsandTricks createURLForPath:@"rest/linuxTips"]];
     [request setHTTPMethod:@"GET"];
+    
     if (self.session){
-        
         
         // use of GCD and Multithreading so Main Queue will not block untill data is retrieved.
         
         dispatch_queue_t fatchQ = dispatch_queue_create("fetch queue", NULL);
-        
         dispatch_async(fatchQ, ^{
             
-            NSURLSessionDataTask *getRequestTask = [self.session dataTaskWithRequest:request
-                                                                   completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            NSURLSessionDataTask *getRequestTask = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                 
-                if (!error) {
+                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                NSDictionary *headres = [httpResponse allHeaderFields];
+                if (!error && httpResponse.statusCode == 200 ) {
                     
-                   
                     
-                  //Once data is retrieved dispatch back to main queue to adjust UI
+                    NSLog(@"%d",httpResponse.statusCode);
+                    
+                    //Once data is retrieved dispatch back to main queue to adjust UI
+                    
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
-                       self.tipList = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:NULL];
-                                               // stop UITableViewController's refreshControl animation
+                        NSArray *retrivedJSONObjectArray = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:NULL];
+                        if (retrivedJSONObjectArray == nil) {
+                            
+                            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error"
+                                                                           message:@"Some thing has gone wrong"
+                                                                          delegate:nil
+                                                                 cancelButtonTitle:nil
+                                                                 otherButtonTitles:@"OK", nil];
+                            
+                            [alert show];
+                        }
+                        else{
+                            
+                            self.tipList = retrivedJSONObjectArray;
+                        }
+                        
+                        // stop UITableViewController's refreshControl animation
                         [self.refreshControl endRefreshing];
                     });
-
+                    
                 }
-                
                 else {
                     // dataTask is not complited due to error
-                
+                    
+                    NSString *errorDescription = [[NSString alloc]init];
+                    
+                    switch (httpResponse.statusCode) {
+                        case 404:
+                            errorDescription = @" The requested URL was not found on this server. ";
+                            break;
+                        case 0:
+                            errorDescription = @"Could not get any response, It seems could not connect to the sever. ";
+                            break;
+                        default:
+                            break;
+                    }
+                    
+                    
                     dispatch_async(dispatch_get_main_queue(), ^{
                         
                         // provide user a alert about error
                         
+                        [self.refreshControl endRefreshing];
                         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error"
-                                                                       message:error.localizedDescription
+                                                                       message:errorDescription
                                                                       delegate:nil
-                                                             cancelButtonTitle:@"OK"
-                                                             otherButtonTitles: nil];
+                                                             cancelButtonTitle:nil
+                                                             otherButtonTitles:@"OK", nil];
                         [alert show];
                         
-                        [self.refreshControl endRefreshing];
                     });
-                
+                    
+                    
                 }
-                
                 
             }];
             
             // Very Very important to resume NSURLSessionTask because by defalut it is suspended.
+            
             [getRequestTask resume];
             
         });
@@ -92,13 +121,13 @@
         
     }
     else{
-        
         NSLog(@"I'm not getting Session object");
         
     }
     
     
 }
+
 
 -(void)setTipList:(NSArray *)tipList{
 
