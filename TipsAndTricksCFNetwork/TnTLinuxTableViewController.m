@@ -26,7 +26,8 @@
 
 -(IBAction)getData{
     
-    
+    [self.refreshControl beginRefreshing];
+
     
     // this method creates NSURLRequest for appropriate URL and than create NSURLSessionData task to GET data.
     NSMutableURLRequest *request =  [[NSMutableURLRequest alloc]initWithURL:[TipsandTricks createURLForPath:@"rest/linuxTips"]];
@@ -159,7 +160,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
-    [self getData]; // call to getData 
+    [self getData]; // call to getData
     
     
 }

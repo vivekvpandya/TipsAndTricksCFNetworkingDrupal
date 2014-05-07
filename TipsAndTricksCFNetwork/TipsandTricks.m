@@ -12,7 +12,7 @@
 
 +(NSURL *)baseURL{
 
-    NSString *baseURlString = [NSString stringWithFormat:@"http://localhost/drupal8/"]; // You may replace this with base URL for your Drupal site.
+    NSString *baseURlString = [NSString stringWithFormat:@"http://tntfoss-vivekvpandya.rhcloud.com/"]; // You may replace this with base URL for your Drupal site.
     NSURL *baseURL = [NSURL URLWithString:baseURlString];
     
     return baseURL;
@@ -28,7 +28,7 @@
 +(NSURL *)createURLForNodeID:(NSInteger)nid{
 
     NSURL *baseURL = [self baseURL];
-    NSString *stringForNid = [NSString stringWithFormat:@"entity/node/%zd",nid]; // as REST service on Drupal 8 alpha 10 requires "entity" word in the URL
+    NSString *stringForNid = [NSString stringWithFormat:@"node/%zd",nid]; // as REST service on Drupal 8 alpha 10 requires "entity" word in the URL
     NSURL *urlForNodeID = [baseURL URLByAppendingPathComponent:stringForNid];
     
     return urlForNodeID;

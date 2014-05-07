@@ -14,5 +14,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLable;
 
 @property (weak, nonatomic) IBOutlet UIWebView *bodyWebView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *networkActivityIndicator;
 
 @end
