@@ -39,7 +39,7 @@
             NSURLSessionDataTask *getRequestTask = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                 
                 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-                NSDictionary *headres = [httpResponse allHeaderFields];
+           
                 if (!error && httpResponse.statusCode == 200 ) {
                     
                   
@@ -49,11 +49,13 @@
 
             
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    NSArray *retrivedJSONObjectArray = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:NULL];
+                    NSError *JSONError  = [[NSError alloc]init];
+                    NSArray *retrivedJSONObjectArray = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&JSONError];
+                    
                     if (retrivedJSONObjectArray == nil) {
                         
                         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error"
-                                                                       message:@"Some thing has gone wrong"
+                                                                       message:@" Unable to download, Try checking network connection "
                                                                       delegate:nil
                                                              cancelButtonTitle:nil
                                                              otherButtonTitles:@"OK", nil];
