@@ -25,6 +25,7 @@
 		CF3CFCC1191128FB000C7C83 /* TnTTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF3CFCC0191128FB000C7C83 /* TnTTableViewController.m */; };
 		CF76E651191507EE002BF608 /* TnTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF76E650191507EE002BF608 /* TnTViewController.m */; };
 		CFA6F65F1924785D00EA59D5 /* TnTLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFA6F65E1924785D00EA59D5 /* TnTLoginViewController.m */; };
+		CFE389A01925130100D73721 /* TnTUserDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFE3899F1925130100D73721 /* TnTUserDetailsViewController.m */; };
 		CFE5C6A71912106600056289 /* TnTLinuxTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFE5C6A61912106600056289 /* TnTLinuxTableViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +66,8 @@
 		CF76E650191507EE002BF608 /* TnTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TnTViewController.m; sourceTree = "<group>"; };
 		CFA6F65D1924785D00EA59D5 /* TnTLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TnTLoginViewController.h; sourceTree = "<group>"; };
 		CFA6F65E1924785D00EA59D5 /* TnTLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TnTLoginViewController.m; sourceTree = "<group>"; };
+		CFE3899E1925130100D73721 /* TnTUserDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TnTUserDetailsViewController.h; sourceTree = "<group>"; };
+		CFE3899F1925130100D73721 /* TnTUserDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TnTUserDetailsViewController.m; sourceTree = "<group>"; };
 		CFE5C6A51912106600056289 /* TnTLinuxTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TnTLinuxTableViewController.h; sourceTree = "<group>"; };
 		CFE5C6A61912106600056289 /* TnTLinuxTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TnTLinuxTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -137,6 +140,8 @@
 				CFE5C6A51912106600056289 /* TnTLinuxTableViewController.h */,
 				CFE5C6A61912106600056289 /* TnTLinuxTableViewController.m */,
 				CF3CFC9619111B03000C7C83 /* Main_iPhone.storyboard */,
+				CFE3899E1925130100D73721 /* TnTUserDetailsViewController.h */,
+				CFE3899F1925130100D73721 /* TnTUserDetailsViewController.m */,
 				CF3CFC9919111B03000C7C83 /* Main_iPad.storyboard */,
 				CF3CFC9F19111B03000C7C83 /* Images.xcassets */,
 				CF3CFC8B19111B03000C7C83 /* Supporting Files */,
@@ -277,6 +282,7 @@
 				CFA6F65F1924785D00EA59D5 /* TnTLoginViewController.m in Sources */,
 				CF3CFC9119111B03000C7C83 /* main.m in Sources */,
 				CF76E651191507EE002BF608 /* TnTViewController.m in Sources */,
+				CFE389A01925130100D73721 /* TnTUserDetailsViewController.m in Sources */,
 				CFE5C6A71912106600056289 /* TnTLinuxTableViewController.m in Sources */,
 				CF3CFC9519111B03000C7C83 /* TnTAppDelegate.m in Sources */,
 				CF3CFCC1191128FB000C7C83 /* TnTTableViewController.m in Sources */,

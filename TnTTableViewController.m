@@ -9,7 +9,8 @@
 #import "TnTTableViewController.h"
 #import "TnTViewController.h"
 #import "TipsandTricks.h"
-
+#import "TnTLoginViewController.h"
+#import "TnTUserDetailsViewController.h"
 @interface TnTTableViewController ()
 
 @property (nonatomic,strong) NSURLSession *session; // to hold NSURLSession object
@@ -23,14 +24,13 @@
 
 -(IBAction)getData{
     
-      [self.refreshControl beginRefreshing];
     
     // this method creates NSURLRequest for appropriate URL and than create NSURLSessionData task to GET data.
         NSMutableURLRequest *request =  [[NSMutableURLRequest alloc]initWithURL:[TipsandTricks createURLForPath:@"rest/drupalTips"]];
     [request setHTTPMethod:@"GET"];
     
     if (self.session){
-        
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         // use of GCD and Multithreading so Main Queue will not block untill data is retrieved.
         
         dispatch_queue_t fatchQ = dispatch_queue_create("fetch queue", NULL);
@@ -59,7 +59,7 @@
                                                                       delegate:nil
                                                              cancelButtonTitle:nil
                                                              otherButtonTitles:@"OK", nil];
-                        
+                        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                         [alert show];
                     }
                     else{
@@ -68,6 +68,7 @@
                     }
                     
                     // stop UITableViewController's refreshControl animation
+                    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                     [self.refreshControl endRefreshing];
                 });
                 
@@ -92,7 +93,7 @@
                     dispatch_async(dispatch_get_main_queue(), ^{
                     
                         // provide user a alert about error
-
+                        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                         [self.refreshControl endRefreshing];
                         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error"
                                                                        message:errorDescription
@@ -167,10 +168,7 @@
     [super viewDidLoad];
     
 
-    UIBarButtonItem *navigationButton = [[UIBarButtonItem alloc]initWithTitle:@"Login" style:UIBarButtonItemStyleBordered target:self action:@selector(presentLoginViewController)];
-    self.navigationItem.rightBarButtonItem = navigationButton;
-
-    // Uncomment the following line to preserve selection between presentations.
+       // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
@@ -179,7 +177,7 @@
 
 -(void)presentLoginViewController{
     
-    UIViewController *loginViewController = [[UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"loginViewController"];
+    TnTLoginViewController *loginViewController = [[UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"loginViewController"];
     [self presentViewController:loginViewController animated:YES completion:nil];
     
 }
@@ -191,9 +189,29 @@
   
     [self getData];
 
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *basicAuthString = [userDefaults objectForKey:@"basicAuthString"];
+    if (basicAuthString) {
+        
+        UIBarButtonItem *navigationButton = [[UIBarButtonItem alloc]initWithTitle:@"User" style:UIBarButtonItemStyleBordered target:self action:@selector(presentUserViewController)];
+        self.navigationItem.rightBarButtonItem = navigationButton;
+        
+    }
+    else{
+        UIBarButtonItem *navigationButton = [[UIBarButtonItem alloc]initWithTitle:@"Login" style:UIBarButtonItemStyleBordered target:self action:@selector(presentLoginViewController)];
+        self.navigationItem.rightBarButtonItem = navigationButton;
+    }
 
 }
 
+
+-(void)presentUserViewController{
+    
+    TnTUserDetailsViewController *userViewController = [[UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"userdetails"];
+    [self presentViewController:userViewController animated:YES completion:nil];
+    
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

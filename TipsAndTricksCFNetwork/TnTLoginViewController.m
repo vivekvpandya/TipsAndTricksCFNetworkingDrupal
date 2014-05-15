@@ -67,27 +67,34 @@
     
     if (![self.userName.text isEqualToString:@""]   && ![self.password.text isEqualToString:@""] ) {
         
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         
-    
-    
-    NSString *basicAuthString = [TipsandTricks basicAuthStringforUsername:self.userName.text Password:self.password.text];
-    
-    NSURLSessionConfiguration *config = [NSURLSessionConfiguration ephemeralSessionConfiguration];
-    [config setHTTPAdditionalHeaders:@{@"Authorization":basicAuthString}]; // set Authorization header for session object
-    
-  self.session = [NSURLSession sessionWithConfiguration:config];
-    
-    
-    NSMutableURLRequest *validateUserRequest = [NSMutableURLRequest requestWithURL:self.loginServiceURL];
+        dispatch_queue_t fatchQ = dispatch_queue_create("login queue", NULL);
+        dispatch_async(fatchQ, ^{
         
-    self.validateUserTask = [self.session dataTaskWithRequest:validateUserRequest
-                                                        completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                                                            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-                                                            if (!error) {
+            
+        
+            NSString *basicAuthString = [TipsandTricks basicAuthStringforUsername:self.userName.text Password:self.password.text];
+            
+            NSURLSessionConfiguration *config = [NSURLSessionConfiguration ephemeralSessionConfiguration];
+            [config setHTTPAdditionalHeaders:@{@"Authorization":basicAuthString}]; // set Authorization header for session object
+            
+            self.session = [NSURLSession sessionWithConfiguration:config];
+            
+            
+            NSMutableURLRequest *validateUserRequest = [NSMutableURLRequest requestWithURL:self.loginServiceURL];
+            
+            self.validateUserTask = [self.session dataTaskWithRequest:validateUserRequest
+                                                    completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                                                        if (!error) {
+                                                            dispatch_async(dispatch_get_main_queue(), ^{
+                                                                
                                                                 if (httpResponse.statusCode == 200) {
                                                                     NSLog(@"ok logged in");
                                                                     [[NSUserDefaults standardUserDefaults] setObject:basicAuthString forKey:@"basicAuthString"];
                                                                     [[NSUserDefaults standardUserDefaults] synchronize];
+                                                                    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                                                                     [self dismissViewControllerAnimated:YES completion:nil];
                                                                 }
                                                                 else if (httpResponse.statusCode == 403)
@@ -97,19 +104,27 @@
                                                                                                                        delegate:nil
                                                                                                               cancelButtonTitle:@"OK"
                                                                                                               otherButtonTitles:nil];
+                                                                    
+                                                                    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                                                                     [loginAlert show];
-                                                                
+                                                                    
                                                                 }
                                                                 else{
-                                                                
+                                                                    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                                                                     NSLog(@"Status code %d",httpResponse.statusCode);
-                                                                
+                                                                    
                                                                 }
-                                                            }
+                                                            });
+                                                            
+                                                        }
+                                                        
+                                                    }];
+            
+            [self.validateUserTask resume];
         
-    }];
+        });
     
-    [self.validateUserTask resume];
+  
 
     }
 

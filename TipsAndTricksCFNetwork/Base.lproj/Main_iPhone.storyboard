@@ -267,10 +267,10 @@
             </objects>
             <point key="canvasLocation" x="2411" y="86"/>
         </scene>
-        <!--View Controller-->
+        <!--TnT User Details View Controller-->
         <scene sceneID="wb2-qQ-Wk7">
             <objects>
-                <viewController storyboardIdentifier="userdetails" id="GU2-oZ-p1N" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="userdetails" id="GU2-oZ-p1N" customClass="TnTUserDetailsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5Vb-jC-FkW"/>
                         <viewControllerLayoutGuide type="bottom" id="LWI-9L-Qrt"/>
@@ -279,19 +279,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YFh-Xb-um5">
-                                <rect key="frame" x="130" y="269" width="60" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fcw-J4-8U3">
+                                <rect key="frame" x="136" y="269" width="49" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Sign Out">
+                                <state key="normal" title="Logout">
                                     <color key="titleColor" red="0.02352941222" green="0.47058823700000002" blue="0.74509805439999999" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="logout:" destination="GU2-oZ-p1N" eventType="touchUpInside" id="9vQ-rD-c6o"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="YFh-Xb-um5" firstAttribute="centerX" secondItem="3yU-jS-kBo" secondAttribute="centerX" id="Jdg-Vr-r2x"/>
-                            <constraint firstItem="YFh-Xb-um5" firstAttribute="centerY" secondItem="3yU-jS-kBo" secondAttribute="centerY" id="rhS-jh-3Gs"/>
+                            <constraint firstItem="LWI-9L-Qrt" firstAttribute="top" secondItem="fcw-J4-8U3" secondAttribute="bottom" constant="269" id="0Is-ks-HNi"/>
+                            <constraint firstItem="fcw-J4-8U3" firstAttribute="leading" secondItem="3yU-jS-kBo" secondAttribute="leading" constant="136" id="SYK-Vs-hTF"/>
                         </constraints>
                     </view>
                 </viewController>
