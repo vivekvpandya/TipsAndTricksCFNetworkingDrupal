@@ -165,6 +165,21 @@
     
 }
 
+-(void)viewDidLoad{
+
+
+    [super viewDidLoad];
+    UIBarButtonItem *navigationButton = [[UIBarButtonItem alloc]initWithTitle:@"Login" style:UIBarButtonItemStyleBordered target:self action:@selector(presentLoginViewController)];
+    self.navigationItem.rightBarButtonItem = navigationButton;
+
+}
+
+-(void)presentLoginViewController{
+
+    UIViewController *loginViewController = [[UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"loginViewController"];
+    [self presentViewController:loginViewController animated:YES completion:nil];
+
+}
 
 #pragma mark - Table view data source
 

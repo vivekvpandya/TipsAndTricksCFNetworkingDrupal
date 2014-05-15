@@ -24,6 +24,8 @@
 +(NSURL *)baseURL;
 +(NSURL *)createURLForPath:(NSString *)path;
 +(NSURL *)createURLForNodeID:(NSInteger)nid;
++(NSString *)basicAuthStringforUsername:(NSString *)username Password:(NSString *)password;
+
 
 
 @end

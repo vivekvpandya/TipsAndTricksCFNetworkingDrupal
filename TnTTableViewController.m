@@ -167,13 +167,23 @@
     [super viewDidLoad];
     
 
-    
+    UIBarButtonItem *navigationButton = [[UIBarButtonItem alloc]initWithTitle:@"Login" style:UIBarButtonItemStyleBordered target:self action:@selector(presentLoginViewController)];
+    self.navigationItem.rightBarButtonItem = navigationButton;
+
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
+
+-(void)presentLoginViewController{
+    
+    UIViewController *loginViewController = [[UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"loginViewController"];
+    [self presentViewController:loginViewController animated:YES completion:nil];
+    
+}
+
 
 -(void)viewWillAppear:(BOOL)animated{
 

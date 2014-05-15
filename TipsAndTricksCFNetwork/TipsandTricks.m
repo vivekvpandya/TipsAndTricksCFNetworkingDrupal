@@ -12,8 +12,10 @@
 
 +(NSURL *)baseURL{
 
-    NSString *baseURlString = [NSString stringWithFormat:@"http://tntfoss-vivekvpandya.rhcloud.com/"]; // You may replace this with base URL for your Drupal site.
-    NSURL *baseURL = [NSURL URLWithString:baseURlString];
+    NSString *baseURLString = [NSString stringWithFormat:@"http://tntfoss-vivekvpandya.rhcloud.com/"]; // You may replace this with base URL for your Drupal site. */
+    /*NSString *baseURLString = [NSString stringWithFormat:@"http://localhost/dr8a11/"]; */
+    
+    NSURL *baseURL = [NSURL URLWithString:baseURLString];
     
     return baseURL;
 }
@@ -25,6 +27,7 @@
     return urlForPath;
 
 }
+
 +(NSURL *)createURLForNodeID:(NSInteger)nid{
 
     NSURL *baseURL = [self baseURL];
@@ -37,5 +40,17 @@
 
 }
 
++(NSString *)basicAuthStringforUsername:(NSString *)username Password:(NSString *)password{
+    
+    NSString * userNamePasswordString = [NSString stringWithFormat:@"%@:%@",username,password]; // "username:password"
+    NSData *userNamePasswordData = [userNamePasswordString dataUsingEncoding:NSUTF8StringEncoding]; // NSData object for base64encoding
+    NSString *base64encodedDataString = [userNamePasswordData base64EncodedStringWithOptions:0]; // this will be something like "3n42hbwer34+="
+    
+    
+    NSString * basicAuthString = [NSString stringWithFormat:@"Basic %@",base64encodedDataString]; // example set "Authorization header "Basic 3cv%54F0-34="
+    
+    return  basicAuthString;
+
+}
 
 @end
