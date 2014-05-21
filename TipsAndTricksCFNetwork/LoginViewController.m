@@ -139,12 +139,11 @@
     
 }
 
-
-
-
-- (IBAction)hideKeyBoard:(id)sender {
-    
+- (IBAction)hideKeyBoard:(UITapGestureRecognizer *)sender {
     [self.usernameTextField resignFirstResponder];
     [self.passwordTextField resignFirstResponder];
 }
+
+
+
 @end

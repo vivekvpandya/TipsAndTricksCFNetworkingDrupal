@@ -13,6 +13,5 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 
-- (IBAction)hideKeyBoard:(id)sender;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @end
