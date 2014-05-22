@@ -54,7 +54,7 @@
         NSArray *creds = [SGKeychain usernamePasswordForServiceName:@"Drupal 8" accessGroup:nil error:&fetchCredError]; // array with username at 0 and password at 1
         
         NSString *basicAuthString = [TipsandTricks basicAuthStringforUsername:[creds objectAtIndex:0] Password:[creds objectAtIndex:1]];
-        NSURL *loginURL = [TipsandTricks createURLForPath:@"user/verify"];
+        NSURL *loginURL = [TipsandTricks createURLForPath:@"user/details"];
         
         NSURLRequest *request = [NSURLRequest requestWithURL:loginURL];
         

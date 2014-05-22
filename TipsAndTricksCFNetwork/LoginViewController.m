@@ -72,7 +72,7 @@
     
     self.session = [NSURLSession sessionWithConfiguration:config];
     
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://tntfoss-vivekvpandya.rhcloud.com/user/verify"]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://tntfoss-vivekvpandya.rhcloud.com/user/details"]];
     NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
      
    dispatch_queue_t queue = dispatch_queue_create("queue", NULL);
