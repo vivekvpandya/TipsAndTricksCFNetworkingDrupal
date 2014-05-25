@@ -7,6 +7,9 @@
 //
 
 #import "TnTAppDelegate.h"
+#import "User.h"
+#import "SGKeychain.h"
+#import "TipsandTricks.h"
 
 @implementation TnTAppDelegate
 
@@ -14,6 +17,26 @@
 {
     // Override point for customization after application launch.
   
+    
+    
+    
+    
+    
+    // Fetch the credentials if already there in keychain with service name "Drupal 8"
+    
+    
+    NSError *fetchPasswordError = nil;
+    
+    NSArray *credentials = [SGKeychain usernamePasswordForServiceName:@"Drupal 8" accessGroup:nil error:&fetchPasswordError];
+    if (credentials != nil ) {
+        
+        
+        [TipsandTricks performLoginWithUsername:[credentials objectAtIndex:0] andPassword:[credentials objectAtIndex:1]];
+        
+        
+        
+        
+    }
     
     
     return YES;

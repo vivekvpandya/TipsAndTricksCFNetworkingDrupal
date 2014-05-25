@@ -167,6 +167,7 @@
     [super viewDidLoad];
     
     
+    
        // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -179,8 +180,8 @@
 -(void)viewWillAppear:(BOOL)animated{
 
     [super viewWillAppear:animated];
-  
     [self getData];
+   
 
     
    }
@@ -213,7 +214,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"push" forIndexPath:indexPath];
     
     cell.textLabel.text = [[self.tipList objectAtIndex:indexPath.row] objectForKey:@"title"];
-    cell.detailTextLabel.text = [[self.tipList objectAtIndex:indexPath.row] objectForKey:@"created"];
+    cell.detailTextLabel.text = [[self.tipList objectAtIndex:indexPath.row] objectForKey:@"changed"];
     return cell;
 }
 

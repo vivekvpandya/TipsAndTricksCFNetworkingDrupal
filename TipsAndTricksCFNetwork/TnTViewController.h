@@ -11,9 +11,12 @@
 @interface TnTViewController : UIViewController
 
 @property (nonatomic,strong) NSDictionary *tip;
-@property (weak, nonatomic) IBOutlet UILabel *titleLable;
+
+@property (weak, nonatomic) IBOutlet UITextField *titleTextField;
 
 @property (weak, nonatomic) IBOutlet UIWebView *bodyWebView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *networkActivityIndicator;
+@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
+- (IBAction)deleteNode:(id)sender;
 
 @end

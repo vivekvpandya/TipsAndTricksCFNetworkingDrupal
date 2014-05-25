@@ -7,8 +7,12 @@
 //
 
 #import "TnTViewController.h"
+#import "User.h"
+#import "TipsandTricks.h"
 
 @interface TnTViewController ()
+
+
 
 @end
 
@@ -29,6 +33,7 @@
 
     if (self.tip) {
    
+        
         NSString *titleString = [[NSString alloc]initWithFormat:@"%@",[self.tip objectForKey:@"title"]];
         
         //as per my site configuration all fields are required but it may be the case that still we don't get title or body of tip than we should handle that
@@ -37,7 +42,9 @@
         
         
         if (titleString != nil && ![titleString isEqualToString:@"<null>"]) {
-            self.titleLable.text = titleString;
+            self.titleTextField.text = titleString;
+            self.titleTextField.enabled = NO;
+            
         }
         else{
             
@@ -56,12 +63,16 @@
             UIAlertView *errorAlert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Cound not load tip content or It is empty" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [errorAlert show];
         }
+        
+        
     }
     else{
     UIAlertView *errorAlert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Cound not load tip data" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [errorAlert show];
     }
-    // Do any additional setup after loading the view.
+  
+        
+        // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
@@ -70,7 +81,75 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    NSString *authorID = [self.tip objectForKey:@"uid"];
+    User *user = [User sharedInstance];
+    self.deleteButton.hidden = YES;
+    
+    BOOL editEnable = NO;
+    
+    
+    if (user.userName) {
+        
+        
+        if ([authorID isEqualToString:user.uid] ) {
+            
+            editEnable = YES;
+            
+            
+        }
+        else{
+            
+            for (id role in user.roles) {
+                
+                if ([role isEqualToString:@"administrator"]) {
+                    
+                    editEnable = YES;
+                    
+                }
+            }
+            
+            
+        }
+    }
+    
+    
+    if (editEnable == YES) {
+        
+        self.navigationItem.rightBarButtonItem = self.editButtonItem; // toggles between "Edit" and "Done" button item
+        
+
+}
+    else{
+        self.navigationItem.rightBarButtonItem = nil;
+        [self.navigationItem setHidesBackButton:NO animated:YES];
+        
+    }
+}
+
+
+-(void)setEditing:(BOOL)editing animated:(BOOL)animated{
+
+
+    [super setEditing:editing animated:animated];
+    [self.navigationItem setHidesBackButton:editing animated:YES];
+    self.titleTextField.enabled = editing;
+    self.deleteButton.hidden = NO;
+    
+    if (!editing) {
+        self.deleteButton.hidden = YES;
+    }
+    
+
+}
+
+
+
 /*
+ 
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -81,4 +160,77 @@
 }
 */
 
+
+
+
+- (IBAction)deleteNode:(id)sender {
+
+    User *user = [User sharedInstance];
+    
+    NSMutableURLRequest *deleteRequest  = [[NSMutableURLRequest alloc]initWithURL:[TipsandTricks createURLForNodeID:[self.tip objectForKey:@"nid"]]];
+    
+    [deleteRequest setHTTPMethod:@"DELETE"];
+    
+    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    [config setHTTPAdditionalHeaders:@{@"Authorization":user.basicAuthString}];
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
+    
+    NSURLSessionDataTask *deleteTask = [session dataTaskWithRequest:deleteRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (!error) {
+            
+            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+            
+            if (httpResponse.statusCode == 204) {
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                    [self.navigationController popToRootViewControllerAnimated:YES];
+                });
+                
+            }
+            else if(httpResponse.statusCode == 403){
+            
+            
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                
+                    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error while deleting node" message:@"access forbidden" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                    [alert show];
+                
+                });
+                
+            }
+            else{
+            
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error while deleting node" message:[NSString stringWithFormat:@"%ld",(long)httpResponse.statusCode] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                    [alert show];
+                    
+                });
+
+                
+                
+            }
+            
+        }
+        else {
+            NSLog(@"delete failed due to %@ ",error.localizedDescription);
+        
+        }
+        
+        
+    }];
+   
+    [deleteTask resume];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
+                                                                                  
+    
+    
+}
 @end

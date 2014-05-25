@@ -9,6 +9,8 @@
 #import "LoginViewController.h"
 #import "SGKeychain.h"
 #import "User.h"
+#import "TipsandTricks.h"
+
 @interface LoginViewController ()
 
 @property (nonatomic,strong) NSURLSession *session;
@@ -59,11 +61,11 @@
     
     NSString *username = self.usernameTextField.text;
     NSString *password = self.passwordTextField.text;
-    NSString *userpassString = [NSString stringWithFormat:@"%@:%@",username,password];
-    NSData *userpassData = [userpassString dataUsingEncoding:NSUTF8StringEncoding];
     
-    NSString *base64CredString = [userpassData base64EncodedStringWithOptions:0];
-    NSString *basicAuthString = [NSString stringWithFormat:@"Basic %@",base64CredString];
+    
+    
+  
+    NSString *basicAuthString = [TipsandTricks basicAuthStringforUsername:username Password:password];
     
     __block NSMutableDictionary *userDictionary = nil;
     
@@ -72,7 +74,8 @@
     
     self.session = [NSURLSession sessionWithConfiguration:config];
     
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://tntfoss-vivekvpandya.rhcloud.com/user/details"]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[TipsandTricks createURLForPath:@"user/details"]];
+    
     NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
      
    dispatch_queue_t queue = dispatch_queue_create("queue", NULL);
@@ -89,8 +92,12 @@
 
                         userDictionary = [retrievedJSON mutableCopy];
                         [userDictionary addEntriesFromDictionary:@{@"basicAuthString": basicAuthString}];
+                      
+                        //set keychain item for service name "Drupal 8"
                         NSError *setPasswordError = nil;
                         [SGKeychain setPassword:password username:username serviceName:@"Drupal 8" accessGroup:nil updateExisting:YES error:&setPasswordError];
+                        
+                        // initialize singleton user object
                         
                         if (userDictionary != nil) {
                            // NSLog(@"userDictionary %@", userDictionary );

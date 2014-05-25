@@ -51,6 +51,9 @@ static User *sharedDataInstance = nil;
     self.userName = [UserJSONObject objectForKey:@"name"];
     self.roles = [UserJSONObject objectForKey:@"roles"];
     self.basicAuthString = [UserJSONObject objectForKey:@"basicAuthString"];
+    self.uid = [UserJSONObject objectForKey:@"uid"];
+    
+    
     NSLog(@"initialized");
     
 

@@ -45,100 +45,8 @@
 
     User *user = [User sharedInstance];
     
-    if (user.userName == nil) {
-        [self.activityIndicator startAnimating];
-        
-        // app has directly used previous credential from keychain , so check validity of that credential and initialize user
-        NSError *fetchCredError = nil;
-        
-        NSArray *creds = [SGKeychain usernamePasswordForServiceName:@"Drupal 8" accessGroup:nil error:&fetchCredError]; // array with username at 0 and password at 1
-        
-        NSString *basicAuthString = [TipsandTricks basicAuthStringforUsername:[creds objectAtIndex:0] Password:[creds objectAtIndex:1]];
-        NSURL *loginURL = [TipsandTricks createURLForPath:@"user/details"];
-        
-        NSURLRequest *request = [NSURLRequest requestWithURL:loginURL];
-        
-        NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-        [config setHTTPAdditionalHeaders:@{@"Authorization": basicAuthString}];
-        NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
-        
-        NSURLSessionDataTask *loginTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-            
-            
-            if (!error) {
-                
-                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-                
-                if(httpResponse.statusCode == 200) {
-                    
-                    
-                    NSDictionary *retrievedJSON = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-                    NSMutableDictionary *userDictionary = [retrievedJSON mutableCopy];
-                    [userDictionary setObject:basicAuthString forKey:@"basicAuthString"];
-                    [user initializeUserWithUserJSONObject:userDictionary];
-                    
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        
-                        [self setUIwithUserDetails];
-                        [self.activityIndicator stopAnimating];
-                    });
-                    
-                    
-                }
-                else if(httpResponse.statusCode == 403 ){
-                    
-                   
-                    NSError *deleteError;
-                    [SGKeychain deletePasswordandUserNameForServiceName:@"Drupal 8" accessGroup:nil error:&deleteError];
-                    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error While Login" message:@" 403 access forbidden" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
-                    
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        
-                        [self.activityIndicator stopAnimating];
-                        [alert show];
-                        
-                        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-                        UIViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"login"];
-                        
-                
-                            
-                            
-                            [self.navigationController setViewControllers:[NSArray arrayWithObject:vc] animated:YES];
-                        
-
-                        
-                    });
-
-                
-                
-                }
-                
-                
-            }
-            else{
-                
-                [self.activityIndicator stopAnimating];
-                NSLog(@"error -> %@",error.localizedDescription);
-                
-            
-            }
-            
-
-            
-            
-        }];
-        
-        [loginTask resume];
-        
-        
-        
-    }
-    else{
-    
-        //user is already logged in just set UI to display user information.
-    
+    if (user.userName != nil) {
         [self setUIwithUserDetails];
-    
     }
 
 }
@@ -160,15 +68,17 @@
     
 
     
-
+// delete keychain item with service name "Drupal 8"
     
     BOOL deleteItemFlag = [SGKeychain deletePasswordandUserNameForServiceName:@"Drupal 8" accessGroup:nil error:&deleteError];
+    User *user = [User sharedInstance];
+    [user clearUserDetails];
     
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     UIViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"login"];
 
-    
+    // present login view controller
     if (deleteItemFlag == YES) {
         
         

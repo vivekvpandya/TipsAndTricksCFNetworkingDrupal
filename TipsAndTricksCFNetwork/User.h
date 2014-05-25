@@ -12,6 +12,7 @@
 @property (nonatomic,strong) NSString *userName;
 @property (nonatomic,strong) NSArray *roles;
 @property (nonatomic,strong) NSString *basicAuthString;
+@property (nonatomic,strong) NSString *uid;
 
 
 -(void)initializeUserWithUserJSONObject:(NSDictionary *)UserJSONObject;

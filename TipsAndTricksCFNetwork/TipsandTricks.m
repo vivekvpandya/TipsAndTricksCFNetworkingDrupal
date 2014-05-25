@@ -7,6 +7,9 @@
 //
 
 #import "TipsandTricks.h"
+#import "User.h"
+#import "SGKeychain.h"
+
 
 @implementation TipsandTricks
 
@@ -28,10 +31,10 @@
 
 }
 
-+(NSURL *)createURLForNodeID:(NSInteger)nid{
++(NSURL *)createURLForNodeID:(NSString *)nid{
 
     NSURL *baseURL = [self baseURL];
-    NSString *stringForNid = [NSString stringWithFormat:@"node/%zd",nid]; // as REST service on Drupal 8 alpha 10 requires "entity" word in the URL
+    NSString *stringForNid = [NSString stringWithFormat:@"node/%@",nid]; // as REST service on Drupal 8 alpha 10 requires "entity" word in the URL
     NSURL *urlForNodeID = [baseURL URLByAppendingPathComponent:stringForNid];
     
     return urlForNodeID;
@@ -50,6 +53,72 @@
     NSString * basicAuthString = [NSString stringWithFormat:@"Basic %@",base64encodedDataString]; // example set "Authorization header "Basic 3cv%54F0-34="
     
     return  basicAuthString;
+
+}
+
++(void)performLoginWithUsername:(NSString *)username andPassword:(NSString *)password{
+
+
+    NSString *basicAuthString = [self basicAuthStringforUsername:username Password:password];
+    
+    NSURL *loginRequestURL = [self createURLForPath:@"user/details"];
+    
+    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    [config setHTTPAdditionalHeaders:@{@"Authorization": basicAuthString}];
+    
+    NSMutableURLRequest *loginRequest = [NSMutableURLRequest requestWithURL:loginRequestURL];
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
+    
+    NSURLSessionDataTask *loginTask = [session dataTaskWithRequest:loginRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        
+        if (!error) {
+            
+            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+            
+            if(httpResponse.statusCode == 200) {
+                
+                
+                NSDictionary *retrievedJSON = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+                NSMutableDictionary *userDictionary = [retrievedJSON mutableCopy];
+                [userDictionary setObject:basicAuthString forKey:@"basicAuthString"];
+                User *user = [User sharedInstance];
+                [user initializeUserWithUserJSONObject:userDictionary];
+                
+              
+                
+                
+            }
+            else if(httpResponse.statusCode == 403 ){
+                
+                // this is the case when user has changed credential details form the iste it self
+                NSError *deleteError;
+                [SGKeychain deletePasswordandUserNameForServiceName:@"Drupal 8" accessGroup:nil error:&deleteError];
+                
+                
+                
+                
+            }
+            
+            
+        }
+        else{
+            
+            
+            NSLog(@"error -> %@",error.localizedDescription);
+            
+            
+        }
+        
+
+        
+        
+    }];
+    
+    [loginTask resume];
+    
+
 
 }
 
