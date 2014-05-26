@@ -9,6 +9,7 @@
 #import "TnTViewController.h"
 #import "User.h"
 #import "TipsandTricks.h"
+#import "SGKeychain.h"
 
 @interface TnTViewController ()
 
@@ -196,9 +197,19 @@
             
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                    
+                    [user clearUserDetails];
+                    NSError *deleteCredError;
+                    [SGKeychain deletePasswordandUserNameForServiceName:@"Drupal 8" accessGroup:nil error:&deleteCredError];
                 
                     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error while deleting node" message:@"access forbidden" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                     [alert show];
+                    
+                    self.navigationItem.rightBarButtonItem = nil;
+                    [self.navigationItem setHidesBackButton:NO animated:YES];
+                    self.deleteButton.hidden = YES;
+                    
+                    
                 
                 });
                 

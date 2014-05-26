@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CF0C8E35193347B1006A38D5 /* TnTTestSegmentedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF0C8E33193340EF006A38D5 /* TnTTestSegmentedViewController.m */; };
 		CF1919D81914AAA100BD9515 /* TipsandTricks.m in Sources */ = {isa = PBXBuildFile; fileRef = CF1919D71914AAA100BD9515 /* TipsandTricks.m */; };
 		CF3CFC8519111B03000C7C83 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF3CFC8419111B03000C7C83 /* Foundation.framework */; };
 		CF3CFC8719111B03000C7C83 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF3CFC8619111B03000C7C83 /* CoreGraphics.framework */; };
@@ -43,6 +44,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CF0C8E32193340EF006A38D5 /* TnTTestSegmentedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TnTTestSegmentedViewController.h; path = TipsAndTricksCFNetworkTests/TnTTestSegmentedViewController.h; sourceTree = SOURCE_ROOT; };
+		CF0C8E33193340EF006A38D5 /* TnTTestSegmentedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TnTTestSegmentedViewController.m; path = TipsAndTricksCFNetworkTests/TnTTestSegmentedViewController.m; sourceTree = SOURCE_ROOT; };
 		CF1919D61914AAA100BD9515 /* TipsandTricks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TipsandTricks.h; sourceTree = "<group>"; };
 		CF1919D71914AAA100BD9515 /* TipsandTricks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TipsandTricks.m; sourceTree = "<group>"; };
 		CF3CFC8119111B03000C7C83 /* TipsAndTricksCFNetwork.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TipsAndTricksCFNetwork.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -193,6 +196,8 @@
 				CF707B4F192D09380016E420 /* LoginViewController.m */,
 				CF707B52192D09380016E420 /* NavigationController.h */,
 				CF707B53192D09380016E420 /* NavigationController.m */,
+				CF0C8E32193340EF006A38D5 /* TnTTestSegmentedViewController.h */,
+				CF0C8E33193340EF006A38D5 /* TnTTestSegmentedViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -326,6 +331,7 @@
 				CF707B54192D09380016E420 /* SGKeychain.m in Sources */,
 				CF76E651191507EE002BF608 /* TnTViewController.m in Sources */,
 				CF3CFC9519111B03000C7C83 /* TnTAppDelegate.m in Sources */,
+				CF0C8E35193347B1006A38D5 /* TnTTestSegmentedViewController.m in Sources */,
 				CF707B58192D09380016E420 /* NavigationController.m in Sources */,
 				CF3CFCC1191128FB000C7C83 /* TnTTableViewController.m in Sources */,
 				CF1919D81914AAA100BD9515 /* TipsandTricks.m in Sources */,
