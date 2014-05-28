@@ -102,7 +102,7 @@
                         if (userDictionary != nil) {
                            // NSLog(@"userDictionary %@", userDictionary );
                             User *user = [User sharedInstance];
-                            [user initializeUserWithUserJSONObject:userDictionary];
+                            [user fillUserWithUserJSONObject:userDictionary];
                             
                         }
                         

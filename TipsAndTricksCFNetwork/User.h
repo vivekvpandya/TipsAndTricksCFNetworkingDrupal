@@ -7,15 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JSONModel.h"
 
-@interface User : NSObject 
-@property (nonatomic,strong) NSString *userName;
+@interface User : JSONModel
+@property (nonatomic,strong) NSString *name;
 @property (nonatomic,strong) NSArray *roles;
 @property (nonatomic,strong) NSString *basicAuthString;
 @property (nonatomic,strong) NSString *uid;
+@property (nonatomic,strong) NSString *email;
 
 
--(void)initializeUserWithUserJSONObject:(NSDictionary *)UserJSONObject;
+-(void)fillUserWithUserJSONObject:(NSDictionary *)UserJSONObject;
 -(void)clearUserDetails;
 //-(BOOL)performLoginWithBasicAuthString:(NSString *)basicAuthString;
 

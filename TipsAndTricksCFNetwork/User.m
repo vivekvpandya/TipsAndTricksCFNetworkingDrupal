@@ -7,7 +7,7 @@
 //
 
 #import "User.h"
-#import "TipsandTricks.h"
+#import "TipsandTricks.h" // this was added to support performLogin method
 
 
 @interface User()
@@ -38,22 +38,25 @@ static User *sharedDataInstance = nil;
 
 -(void)clearUserDetails{
 
-    self.userName = nil;
+    self.name = nil;
     self.roles = nil;
     self.basicAuthString = nil;
+    self.email = nil;
+    self.uid = nil;
     
 
 }
 
--(void)initializeUserWithUserJSONObject:(NSDictionary *)UserJSONObject{
+-(void)fillUserWithUserJSONObject:(NSDictionary *)UserJSONObject{
 
 
-    self.userName = [UserJSONObject objectForKey:@"name"];
+  /*  self.name = [UserJSONObject objectForKey:@"name"];
     self.roles = [UserJSONObject objectForKey:@"roles"];
     self.basicAuthString = [UserJSONObject objectForKey:@"basicAuthString"];
     self.uid = [UserJSONObject objectForKey:@"uid"];
     
-    
+    */
+    [self setValuesForKeysWithDictionary:UserJSONObject];
     NSLog(@"initialized");
     
 

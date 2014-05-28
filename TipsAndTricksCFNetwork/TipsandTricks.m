@@ -84,7 +84,7 @@
                 NSMutableDictionary *userDictionary = [retrievedJSON mutableCopy];
                 [userDictionary setObject:basicAuthString forKey:@"basicAuthString"];
                 User *user = [User sharedInstance];
-                [user initializeUserWithUserJSONObject:userDictionary];
+                [user fillUserWithUserJSONObject:userDictionary];
                 
               
                 

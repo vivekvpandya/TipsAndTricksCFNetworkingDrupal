@@ -93,7 +93,7 @@
     BOOL editEnable = NO;
     
     
-    if (user.userName) {
+    if (user.name) {
         
         
         if ([authorID isEqualToString:user.uid] ) {

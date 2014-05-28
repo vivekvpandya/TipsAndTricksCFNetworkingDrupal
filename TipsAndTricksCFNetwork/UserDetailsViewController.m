@@ -45,7 +45,7 @@
 
     User *user = [User sharedInstance];
     
-    if (user.userName != nil) {
+    if (user.name != nil) {
         [self setUIwithUserDetails];
     }
 
@@ -91,10 +91,10 @@
 
 
     User *user = [User sharedInstance];
-    if (user.userName != nil) {
+    if (user.name != nil) {
         
         
-        self.usernameLabel.text = user.userName;
+        self.usernameLabel.text = user.name;
         
         NSMutableString *roleString = [[NSMutableString alloc]init];
         

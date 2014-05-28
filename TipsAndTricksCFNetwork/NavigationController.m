@@ -50,7 +50,7 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     
     User *user = [User sharedInstance];
-    if ( user.userName != nil)
+    if ( user.name != nil)
     {
         
         [self pushViewController:[storyboard instantiateViewControllerWithIdentifier:@"userDetails"] animated:YES];
