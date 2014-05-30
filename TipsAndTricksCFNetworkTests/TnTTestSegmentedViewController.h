@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TnTTestSegmentedViewController : UIViewController
+@interface TnTTestSegmentedViewController : UIViewController <UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 - (IBAction)changeView:(id)sender;
