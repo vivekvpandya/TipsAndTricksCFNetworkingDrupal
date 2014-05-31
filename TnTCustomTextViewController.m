@@ -1,25 +1,19 @@
 //
-//  TnTTestSegmentedViewController.m
+//  TnTCustomTextViewController.m
 //  TipsAndTricksCFNetwork
 //
-//  Created by Vivek Pandya on 5/26/14.
+//  Created by Vivek Pandya on 5/30/14.
 //  Copyright (c) 2014 Vivek Pandya. All rights reserved.
 //
 
-#import "TnTTestSegmentedViewController.h"
+#import "TnTCustomTextViewController.h"
 
+@interface TnTCustomTextViewController ()
 
-
-
-@interface TnTTestSegmentedViewController ()
-
-@property (strong,nonatomic) NSMutableString *htmlString; // string that will be rendered in webView
-@property (strong,nonatomic) UIButton *boldButton;
+@property (nonatomic,strong) NSString *htmlString;
 @end
 
-@implementation TnTTestSegmentedViewController
-
-    
+@implementation TnTCustomTextViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -35,12 +29,9 @@
     [super viewDidLoad];
     self.webView.hidden = NO;
     self.textView.hidden = YES;
-   // self.segmentedSwitch.hidden = YES;
-    //self.segmentedSwitch.enabled = NO;
-  
     
-   
-    // Do any additional setup after loading the view.
+    
+    // Do any additional setup after loading the view from its nib.
 }
 
 - (void)didReceiveMemoryWarning
@@ -49,58 +40,50 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 - (IBAction)changeView:(id)sender {
     
-    UISegmentedControl *segmentedController = (UISegmentedControl *)sender;
     
-    NSInteger index  = segmentedController.selectedSegmentIndex;
-    
-    if (index == 0) {
-        self.webView.hidden = NO;
-        self.textView.hidden = YES;
-        [self.webView loadHTMLString:self.htmlString baseURL:nil];
-    }
-    if (index == 1) {
-        self.webView.hidden = YES;
-        self.textView.hidden = NO;
+        UISegmentedControl *segmentedController = (UISegmentedControl *)sender;
         
-    }
-
+        NSInteger index  = segmentedController.selectedSegmentIndex;
+        
+        if (index == 0) {
+            self.webView.hidden = NO;
+            self.textView.hidden = YES;
+            self.htmlString = self.textView.textStorage.mutableString ;
+            [self.webView loadHTMLString:self.htmlString baseURL:nil];
+        }
+        if (index == 1) {
+            self.webView.hidden = YES;
+            self.textView.hidden = NO;
+            
+        }
+        
+    
 }
 
 -(UIView *)inputAccessoryView{
-
+    
     CGRect accessFrame = CGRectMake(0.0,0.0,100.0,40.0);
     UIView *inputAccessoryView = [[UIView alloc]initWithFrame:accessFrame];
     inputAccessoryView.backgroundColor = [UIColor blackColor];
-  
+    
     UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     doneButton.frame = CGRectMake(0.0,0.0,50.0,40.0);
     [doneButton setTitle:@"Done" forState:UIControlStateNormal];
     [doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-   
-   // [doneButton addTarget:self action:@selector(hideKeyBoard) forControlEvents:UIControlEventTouchUpInside];
+    
+    // [doneButton addTarget:self action:@selector(hideKeyBoard) forControlEvents:UIControlEventTouchUpInside];
     [doneButton addTarget:self action:@selector(hideKeyBoard:) forControlEvents:UIControlEventTouchUpInside];
     [inputAccessoryView addSubview:doneButton];
-    self.boldButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    self.boldButton.frame = CGRectMake(50.0, 0.0,30.0, 40.0);
+    UIButton *boldButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    boldButton.frame = CGRectMake(50.0, 0.0,30.0, 40.0);
     
-    [self.boldButton setTitle:@"B" forState:UIControlStateNormal];
-    [self.boldButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.boldButton setTitleColor:[UIColor blueColor] forState:UIControlStateSelected];
-    [self.boldButton addTarget:self action:@selector(boldText:) forControlEvents:UIControlEventTouchUpInside];
-    [inputAccessoryView addSubview:self.boldButton];
+    [boldButton setTitle:@"B" forState:UIControlStateNormal];
+    [boldButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [boldButton setTitleColor:[UIColor blueColor] forState:UIControlStateSelected];
+    [boldButton addTarget:self action:@selector(boldText:) forControlEvents:UIControlEventTouchUpInside];
+    [inputAccessoryView addSubview:boldButton];
     
     UIButton *italicButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     italicButton.frame = CGRectMake(80.0, 0.0, 30.0, 40.0);
@@ -115,22 +98,22 @@
     [underlineButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [underlineButton addTarget:self action:@selector(underLineText:) forControlEvents:UIControlEventTouchUpInside];
     [inputAccessoryView addSubview:underlineButton];
-
+    
     UIButton *strikeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     strikeButton.frame = CGRectMake(140.0, 0.0, 30.0, 40.0);
     [strikeButton setTitle:@"≁" forState:UIControlStateNormal];
     [strikeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [strikeButton addTarget:self action:@selector(strikeText:) forControlEvents:UIControlEventTouchUpInside];
     [inputAccessoryView addSubview:strikeButton];
-   
+    
     UIButton *blockquoteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     blockquoteButton.frame = CGRectMake(170.0, 0.0, 30.0, 40.0);
     [blockquoteButton setTitle:@"❝" forState:UIControlStateNormal];
     [blockquoteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [blockquoteButton addTarget:self action:@selector(blockquoteText:) forControlEvents:UIControlEventTouchUpInside];
     [inputAccessoryView addSubview:blockquoteButton];
-
-
+    
+    
     UIButton *paragraphButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     paragraphButton.frame = CGRectMake(200.0, 0.0, 30.0, 40.0);
     [paragraphButton setTitle:@"¶" forState:UIControlStateNormal];
@@ -160,13 +143,13 @@
 
 
 -(void)hideKeyBoard:(UIButton *)sender{
-
-
+    
+    
     
     [self.textView resignFirstResponder];
-    self.htmlString = self.textView.textStorage.mutableString ;
-  
-
+    
+    
+    
 }
 -(void)boldText:(UIButton *)sender{
     
@@ -185,7 +168,7 @@
         if (sender.selected) {
             
             [_textView.textStorage.mutableString insertString:@"</strong>" atIndex:selectedRange.location];
-             _textView.selectedRange = NSMakeRange((selectedRange.location + [@"</strong>" length]), 0);
+            _textView.selectedRange = NSMakeRange((selectedRange.location + [@"</strong>" length]), 0);
         }
         else
         {
@@ -194,9 +177,9 @@
         }
         sender.selected = !sender.selected;
         
-    
+        
     }
-
+    
     
 }
 
@@ -227,11 +210,11 @@
         
         
     }
-
+    
 }
 
 -(void)underLineText:(UIButton *)sender{
-
+    
     NSRange selectedRange = [_textView selectedRange];
     if (selectedRange.location != NSNotFound && selectedRange.length != 0) {
         
@@ -256,10 +239,10 @@
         
         
     }
-
+    
 }
 -(void)strikeText:(UIButton *)sender{
-
+    
     NSRange selectedRange = [_textView selectedRange];
     if (selectedRange.location != NSNotFound && selectedRange.length != 0) {
         
@@ -286,8 +269,8 @@
     }
 }
 -(void)blockquoteText:(UIButton *)sender{
-
-
+    
+    
     NSRange selectedRange = [_textView selectedRange];
     if (selectedRange.location != NSNotFound && selectedRange.length != 0) {
         
@@ -316,8 +299,8 @@
 }
 
 -(void)paragraphText:(UIButton *)sender{
-
-
+    
+    
     
     NSRange selectedRange = [_textView selectedRange];
     if (selectedRange.location != NSNotFound && selectedRange.length != 0) {
@@ -356,13 +339,13 @@
     
     
     
-
+    
 }
 
 
 -(void)uploadImage{
-
-
+    
+    
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -417,75 +400,27 @@
     
 }
 
+-(void)loadHTMLString:(NSString *)htmlString{
 
+    [self.webView loadHTMLString:htmlString baseURL:nil];
 
-
--(void)addOrRemoveFontTraitWithName:(NSString *)traitName AndValue:(uint32_t)traitValue{
-    
-        
-        
-    NSRange selectedRange = [_textView selectedRange];
-    if (selectedRange.location != NSNotFound && selectedRange.length != 0) {
-        
-    
-    NSDictionary *currentAttributesDict = [_textView.textStorage attributesAtIndex:selectedRange.location
-                                                                    effectiveRange:nil];
-    
-    UIFont *currentFont = [currentAttributesDict objectForKey:NSFontAttributeName];
-    
-    UIFontDescriptor *fontDescriptor = [currentFont fontDescriptor];
-    
-    NSString *fontNameAttribute = [fontDescriptor  objectForKey:UIFontDescriptorNameAttribute];
-    UIFontDescriptor *changedFontDescriptor;
-    NSLog(@"%@",currentAttributesDict);
-    
-    if ([fontNameAttribute rangeOfString:traitName].location == NSNotFound) {
-        
-        uint32_t existingTraitsWithNewTrait = [fontDescriptor symbolicTraits] | traitValue;
-        changedFontDescriptor = [fontDescriptor fontDescriptorWithSymbolicTraits:existingTraitsWithNewTrait];
-        UIFont *updatedFont = [UIFont fontWithDescriptor:changedFontDescriptor size:0.0];
-        
-        NSDictionary *dict = @{NSFontAttributeName: updatedFont};
-        
-        [_textView.textStorage beginEditing];
-        [_textView.textStorage setAttributes:dict range:selectedRange];
-        [_textView.textStorage endEditing];
-
-        [_textView.textStorage.mutableString insertString:@"<strong>" atIndex:selectedRange.location];
-        [_textView.textStorage.mutableString insertString:@"</strong>" atIndex:(selectedRange.location + selectedRange.length + [@"<strong>" length])];
-
-            }
-    else{
-        
-        
-        uint32_t existingTraitsWithoutTrait = [fontDescriptor symbolicTraits] & ~traitValue;
-        changedFontDescriptor = [fontDescriptor fontDescriptorWithSymbolicTraits:existingTraitsWithoutTrait];
-        UIFont *updatedFont = [UIFont fontWithDescriptor:changedFontDescriptor size:0.0];
-        
-        NSDictionary *dict = @{NSFontAttributeName: updatedFont};
-        
-        [_textView.textStorage beginEditing];
-        [_textView.textStorage setAttributes:dict range:selectedRange];
-        [_textView.textStorage endEditing];
-
-        
-        NSRange range = {(selectedRange.location - [@"<strong>" length]),[@"<strong>" length]};
-        
-        
-        
-       NSRange range2 = { (selectedRange.location + selectedRange.length) ,[@"</strong>" length]};
-        [_textView.textStorage.mutableString deleteCharactersInRange:range ];
-        [_textView.textStorage.mutableString deleteCharactersInRange:range2 ];
-
-        
-    }
-    
-    
-    
-    
-    }
 }
 
+-(void)addCustomViewinView:(UIView *)targetView{
+    
+    float x = targetView.frame.origin.x;
+    float y = targetView.frame.origin.y;
+    float width = targetView.frame.size.width;
+    float height = targetView.frame.size.height;
+    
+    [self.view setFrame:CGRectMake(x, y, width, height)];
+    [targetView addSubview:self.view];
+    
+}
 
+-(void)loadTextViewWithHTMLString:(NSString *)htmlString{
+    self.textView.text = htmlString;
+
+}
 
 @end

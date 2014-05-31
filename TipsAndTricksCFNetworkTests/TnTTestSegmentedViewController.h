@@ -12,5 +12,6 @@
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 - (IBAction)changeView:(id)sender;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedSwitch;
 
 @end

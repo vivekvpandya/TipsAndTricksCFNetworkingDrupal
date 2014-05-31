@@ -31,6 +31,9 @@
 		CF707B58192D09380016E420 /* NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF707B53192D09380016E420 /* NavigationController.m */; };
 		CF71BB6F193207FE0091B45E /* TnTEditTipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF71BB6E193207FE0091B45E /* TnTEditTipViewController.m */; };
 		CF76E651191507EE002BF608 /* TnTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF76E650191507EE002BF608 /* TnTViewController.m */; };
+		CF8749571938DF3F003950B4 /* TnTTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8749561938DF3F003950B4 /* TnTTextStorage.m */; };
+		CF87495E1938F15F003950B4 /* TnTCustomTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF87495C1938F15F003950B4 /* TnTCustomTextViewController.m */; };
+		CF87495F1938F15F003950B4 /* TnTCustomTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CF87495D1938F15F003950B4 /* TnTCustomTextViewController.xib */; };
 		CFD959FD1935A8750011B68F /* JSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CFD959FC1935A8750011B68F /* JSONModel.m */; };
 /* End PBXBuildFile section */
 
@@ -83,6 +86,11 @@
 		CF71BB6E193207FE0091B45E /* TnTEditTipViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TnTEditTipViewController.m; sourceTree = "<group>"; };
 		CF76E64F191507EE002BF608 /* TnTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TnTViewController.h; sourceTree = "<group>"; };
 		CF76E650191507EE002BF608 /* TnTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TnTViewController.m; sourceTree = "<group>"; };
+		CF8749551938DF3F003950B4 /* TnTTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TnTTextStorage.h; sourceTree = "<group>"; };
+		CF8749561938DF3F003950B4 /* TnTTextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TnTTextStorage.m; sourceTree = "<group>"; };
+		CF87495B1938F15F003950B4 /* TnTCustomTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TnTCustomTextViewController.h; sourceTree = "<group>"; };
+		CF87495C1938F15F003950B4 /* TnTCustomTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TnTCustomTextViewController.m; sourceTree = "<group>"; };
+		CF87495D1938F15F003950B4 /* TnTCustomTextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TnTCustomTextViewController.xib; sourceTree = "<group>"; };
 		CFD959FB1935A8750011B68F /* JSONModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONModel.h; sourceTree = "<group>"; };
 		CFD959FC1935A8750011B68F /* JSONModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -114,6 +122,9 @@
 		CF3CFC7819111B03000C7C83 = {
 			isa = PBXGroup;
 			children = (
+				CF87495B1938F15F003950B4 /* TnTCustomTextViewController.h */,
+				CF87495C1938F15F003950B4 /* TnTCustomTextViewController.m */,
+				CF87495D1938F15F003950B4 /* TnTCustomTextViewController.xib */,
 				CF3CFC8A19111B03000C7C83 /* TipsAndTricksCFNetwork */,
 				CF3CFCAC19111B03000C7C83 /* TipsAndTricksCFNetworkTests */,
 				CF3CFC8319111B03000C7C83 /* Frameworks */,
@@ -208,6 +219,8 @@
 		CF707B5A192D0E350016E420 /* ModalandAPI */ = {
 			isa = PBXGroup;
 			children = (
+				CF8749551938DF3F003950B4 /* TnTTextStorage.h */,
+				CF8749561938DF3F003950B4 /* TnTTextStorage.m */,
 				CF1919D61914AAA100BD9515 /* TipsandTricks.h */,
 				CF707B4A192D09380016E420 /* SGKeychain.h */,
 				CF707B4B192D09380016E420 /* SGKeychain.m */,
@@ -308,6 +321,7 @@
 			files = (
 				CF3CFC9B19111B03000C7C83 /* Main_iPad.storyboard in Resources */,
 				CF3CFCA019111B03000C7C83 /* Images.xcassets in Resources */,
+				CF87495F1938F15F003950B4 /* TnTCustomTextViewController.xib in Resources */,
 				CF3CFC9819111B03000C7C83 /* Main_iPhone.storyboard in Resources */,
 				CF3CFC8F19111B03000C7C83 /* InfoPlist.strings in Resources */,
 			);
@@ -329,12 +343,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF71BB6F193207FE0091B45E /* TnTEditTipViewController.m in Sources */,
+				CF8749571938DF3F003950B4 /* TnTTextStorage.m in Sources */,
 				CF707B56192D09380016E420 /* LoginViewController.m in Sources */,
 				CF707B55192D09380016E420 /* UserDetailsViewController.m in Sources */,
 				CF707B57192D09380016E420 /* User.m in Sources */,
 				CF3CFC9119111B03000C7C83 /* main.m in Sources */,
 				CF707B54192D09380016E420 /* SGKeychain.m in Sources */,
 				CF76E651191507EE002BF608 /* TnTViewController.m in Sources */,
+				CF87495E1938F15F003950B4 /* TnTCustomTextViewController.m in Sources */,
 				CF3CFC9519111B03000C7C83 /* TnTAppDelegate.m in Sources */,
 				CF0C8E35193347B1006A38D5 /* TnTTestSegmentedViewController.m in Sources */,
 				CFD959FD1935A8750011B68F /* JSONModel.m in Sources */,

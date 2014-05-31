@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="lX7-F6-UtU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="pyP-le-JlI">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -121,11 +121,6 @@
                         <rect key="frame" x="0.0" y="44" width="320" height="475"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dGQ-Zh-VGE">
-                                <rect key="frame" x="1" y="42" width="318" height="365"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            </webView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Tip title will be shown here" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="mQ8-iS-CfT">
                                 <rect key="frame" x="7" y="7" width="306" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -148,7 +143,6 @@
                     </scrollView>
                     <navigationItem key="navigationItem" id="5N4-8W-zwv"/>
                     <connections>
-                        <outlet property="bodyWebView" destination="dGQ-Zh-VGE" id="jgz-dK-kaD"/>
                         <outlet property="deleteButton" destination="bID-FL-fWs" id="Qwe-B6-D6R"/>
                         <outlet property="titleTextField" destination="mQ8-iS-CfT" id="LSC-1Y-PgQ"/>
                     </connections>
@@ -198,6 +192,7 @@
                         <gestureRecognizers/>
                     </view>
                     <connections>
+                        <outlet property="segmentedSwitch" destination="cUq-Jp-pc8" id="JBf-YB-qpa"/>
                         <outlet property="textView" destination="E1R-u0-TOD" id="62N-bO-gd3"/>
                         <outlet property="webView" destination="PRr-15-Blu" id="3Dv-ee-bSK"/>
                     </connections>

@@ -10,10 +10,11 @@
 #import "User.h"
 #import "TipsandTricks.h"
 #import "SGKeychain.h"
+#import "TnTCustomTextViewController.h"
 
 @interface TnTViewController ()
 
-
+@property (nonatomic,strong) TnTCustomTextViewController *tipView;
 
 @end
 
@@ -31,7 +32,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    self.tipView = [[TnTCustomTextViewController alloc]init];
+    [self.tipView addCustomViewinView:self.view];
+    
     if (self.tip) {
    
         
@@ -57,7 +60,10 @@
         NSString *bodyHTML = [[NSString alloc]initWithFormat:@"%@",[self.tip objectForKey:@"body"]];
         if (bodyHTML != nil && ![bodyHTML isEqualToString:@"<null>"]) {
             
-            [self.bodyWebView loadHTMLString:bodyHTML baseURL:nil];
+            //[self.bodyWebView loadHTMLString:bodyHTML baseURL:nil];
+            [self.tipView loadHTMLString:bodyHTML];
+            [self.tipView loadTextViewWithHTMLString:bodyHTML];
+
                     }
         else {
         
