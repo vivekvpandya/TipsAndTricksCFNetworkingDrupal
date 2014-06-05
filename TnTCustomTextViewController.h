@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TnTCustomTextViewController : UIViewController <UIAlertViewDelegate>
+@interface TnTCustomTextViewController : UIViewController <UIAlertViewDelegate,UIWebViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedSwitch;
 - (IBAction)changeView:(id)sender;
@@ -21,4 +21,6 @@
 -(void)loadTextViewWithHTMLString:(NSString *)htmlString;
 
 -(void)addCustomViewinView:(UIView *)targetView;
+
+-(void)setTipTitleWithString:(NSString *)string;
 @end

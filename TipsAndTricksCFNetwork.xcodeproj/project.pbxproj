@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CF0C8E35193347B1006A38D5 /* TnTTestSegmentedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF0C8E33193340EF006A38D5 /* TnTTestSegmentedViewController.m */; };
 		CF1919D81914AAA100BD9515 /* TipsandTricks.m in Sources */ = {isa = PBXBuildFile; fileRef = CF1919D71914AAA100BD9515 /* TipsandTricks.m */; };
+		CF30FEC2193B970C003F9E40 /* TnTTipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF30FEC1193B970C003F9E40 /* TnTTipViewController.m */; };
+		CF39BD4B193C9DC100D44D2C /* TnTEditandNewTipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF39BD4A193C9DC100D44D2C /* TnTEditandNewTipViewController.m */; };
 		CF3CFC8519111B03000C7C83 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF3CFC8419111B03000C7C83 /* Foundation.framework */; };
 		CF3CFC8719111B03000C7C83 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF3CFC8619111B03000C7C83 /* CoreGraphics.framework */; };
 		CF3CFC8919111B03000C7C83 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF3CFC8819111B03000C7C83 /* UIKit.framework */; };
@@ -24,16 +25,15 @@
 		CF3CFCB119111B03000C7C83 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CF3CFCAF19111B03000C7C83 /* InfoPlist.strings */; };
 		CF3CFCB319111B03000C7C83 /* TipsAndTricksCFNetworkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CF3CFCB219111B03000C7C83 /* TipsAndTricksCFNetworkTests.m */; };
 		CF3CFCC1191128FB000C7C83 /* TnTTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF3CFCC0191128FB000C7C83 /* TnTTableViewController.m */; };
+		CF66C0F8193E29CF006A9CE2 /* TnTSelectTagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF66C0F7193E29CF006A9CE2 /* TnTSelectTagViewController.m */; };
 		CF707B54192D09380016E420 /* SGKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = CF707B4B192D09380016E420 /* SGKeychain.m */; };
 		CF707B55192D09380016E420 /* UserDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF707B4D192D09380016E420 /* UserDetailsViewController.m */; };
 		CF707B56192D09380016E420 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF707B4F192D09380016E420 /* LoginViewController.m */; };
 		CF707B57192D09380016E420 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = CF707B51192D09380016E420 /* User.m */; };
 		CF707B58192D09380016E420 /* NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF707B53192D09380016E420 /* NavigationController.m */; };
 		CF71BB6F193207FE0091B45E /* TnTEditTipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF71BB6E193207FE0091B45E /* TnTEditTipViewController.m */; };
-		CF76E651191507EE002BF608 /* TnTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF76E650191507EE002BF608 /* TnTViewController.m */; };
 		CF8749571938DF3F003950B4 /* TnTTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = CF8749561938DF3F003950B4 /* TnTTextStorage.m */; };
 		CF87495E1938F15F003950B4 /* TnTCustomTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF87495C1938F15F003950B4 /* TnTCustomTextViewController.m */; };
-		CF87495F1938F15F003950B4 /* TnTCustomTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CF87495D1938F15F003950B4 /* TnTCustomTextViewController.xib */; };
 		CFD959FD1935A8750011B68F /* JSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CFD959FC1935A8750011B68F /* JSONModel.m */; };
 /* End PBXBuildFile section */
 
@@ -48,10 +48,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		CF0C8E32193340EF006A38D5 /* TnTTestSegmentedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TnTTestSegmentedViewController.h; path = TipsAndTricksCFNetworkTests/TnTTestSegmentedViewController.h; sourceTree = SOURCE_ROOT; };
-		CF0C8E33193340EF006A38D5 /* TnTTestSegmentedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TnTTestSegmentedViewController.m; path = TipsAndTricksCFNetworkTests/TnTTestSegmentedViewController.m; sourceTree = SOURCE_ROOT; };
 		CF1919D61914AAA100BD9515 /* TipsandTricks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TipsandTricks.h; sourceTree = "<group>"; };
 		CF1919D71914AAA100BD9515 /* TipsandTricks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TipsandTricks.m; sourceTree = "<group>"; };
+		CF30FEC0193B970C003F9E40 /* TnTTipViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TnTTipViewController.h; sourceTree = "<group>"; };
+		CF30FEC1193B970C003F9E40 /* TnTTipViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TnTTipViewController.m; sourceTree = "<group>"; };
+		CF39BD49193C9DC100D44D2C /* TnTEditandNewTipViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TnTEditandNewTipViewController.h; sourceTree = "<group>"; };
+		CF39BD4A193C9DC100D44D2C /* TnTEditandNewTipViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TnTEditandNewTipViewController.m; sourceTree = "<group>"; };
 		CF3CFC8119111B03000C7C83 /* TipsAndTricksCFNetwork.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TipsAndTricksCFNetwork.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF3CFC8419111B03000C7C83 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CF3CFC8619111B03000C7C83 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -72,6 +74,8 @@
 		CF3CFCB219111B03000C7C83 /* TipsAndTricksCFNetworkTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TipsAndTricksCFNetworkTests.m; sourceTree = "<group>"; };
 		CF3CFCBF191128FB000C7C83 /* TnTTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TnTTableViewController.h; path = TipsAndTricksCFNetwork/TnTTableViewController.h; sourceTree = SOURCE_ROOT; };
 		CF3CFCC0191128FB000C7C83 /* TnTTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TnTTableViewController.m; path = TipsAndTricksCFNetwork/TnTTableViewController.m; sourceTree = SOURCE_ROOT; };
+		CF66C0F6193E29CF006A9CE2 /* TnTSelectTagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TnTSelectTagViewController.h; sourceTree = "<group>"; };
+		CF66C0F7193E29CF006A9CE2 /* TnTSelectTagViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TnTSelectTagViewController.m; sourceTree = "<group>"; };
 		CF707B4A192D09380016E420 /* SGKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGKeychain.h; sourceTree = "<group>"; };
 		CF707B4B192D09380016E420 /* SGKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGKeychain.m; sourceTree = "<group>"; };
 		CF707B4C192D09380016E420 /* UserDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDetailsViewController.h; sourceTree = "<group>"; };
@@ -84,13 +88,10 @@
 		CF707B53192D09380016E420 /* NavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationController.m; sourceTree = "<group>"; };
 		CF71BB6D193207FE0091B45E /* TnTEditTipViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TnTEditTipViewController.h; sourceTree = "<group>"; };
 		CF71BB6E193207FE0091B45E /* TnTEditTipViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TnTEditTipViewController.m; sourceTree = "<group>"; };
-		CF76E64F191507EE002BF608 /* TnTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TnTViewController.h; sourceTree = "<group>"; };
-		CF76E650191507EE002BF608 /* TnTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TnTViewController.m; sourceTree = "<group>"; };
 		CF8749551938DF3F003950B4 /* TnTTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TnTTextStorage.h; sourceTree = "<group>"; };
 		CF8749561938DF3F003950B4 /* TnTTextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TnTTextStorage.m; sourceTree = "<group>"; };
-		CF87495B1938F15F003950B4 /* TnTCustomTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TnTCustomTextViewController.h; sourceTree = "<group>"; };
-		CF87495C1938F15F003950B4 /* TnTCustomTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TnTCustomTextViewController.m; sourceTree = "<group>"; };
-		CF87495D1938F15F003950B4 /* TnTCustomTextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TnTCustomTextViewController.xib; sourceTree = "<group>"; };
+		CF87495B1938F15F003950B4 /* TnTCustomTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TnTCustomTextViewController.h; path = ../TnTCustomTextViewController.h; sourceTree = "<group>"; };
+		CF87495C1938F15F003950B4 /* TnTCustomTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TnTCustomTextViewController.m; path = ../TnTCustomTextViewController.m; sourceTree = "<group>"; };
 		CFD959FB1935A8750011B68F /* JSONModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONModel.h; sourceTree = "<group>"; };
 		CFD959FC1935A8750011B68F /* JSONModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -122,9 +123,6 @@
 		CF3CFC7819111B03000C7C83 = {
 			isa = PBXGroup;
 			children = (
-				CF87495B1938F15F003950B4 /* TnTCustomTextViewController.h */,
-				CF87495C1938F15F003950B4 /* TnTCustomTextViewController.m */,
-				CF87495D1938F15F003950B4 /* TnTCustomTextViewController.xib */,
 				CF3CFC8A19111B03000C7C83 /* TipsAndTricksCFNetwork */,
 				CF3CFCAC19111B03000C7C83 /* TipsAndTricksCFNetworkTests */,
 				CF3CFC8319111B03000C7C83 /* Frameworks */,
@@ -198,10 +196,14 @@
 		CF707B59192D0E180016E420 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				CF39BD49193C9DC100D44D2C /* TnTEditandNewTipViewController.h */,
+				CF39BD4A193C9DC100D44D2C /* TnTEditandNewTipViewController.m */,
+				CF30FEC0193B970C003F9E40 /* TnTTipViewController.h */,
+				CF30FEC1193B970C003F9E40 /* TnTTipViewController.m */,
+				CF87495B1938F15F003950B4 /* TnTCustomTextViewController.h */,
+				CF87495C1938F15F003950B4 /* TnTCustomTextViewController.m */,
 				CF71BB6D193207FE0091B45E /* TnTEditTipViewController.h */,
 				CF71BB6E193207FE0091B45E /* TnTEditTipViewController.m */,
-				CF76E64F191507EE002BF608 /* TnTViewController.h */,
-				CF76E650191507EE002BF608 /* TnTViewController.m */,
 				CF3CFCBF191128FB000C7C83 /* TnTTableViewController.h */,
 				CF3CFCC0191128FB000C7C83 /* TnTTableViewController.m */,
 				CF707B4C192D09380016E420 /* UserDetailsViewController.h */,
@@ -210,8 +212,8 @@
 				CF707B4F192D09380016E420 /* LoginViewController.m */,
 				CF707B52192D09380016E420 /* NavigationController.h */,
 				CF707B53192D09380016E420 /* NavigationController.m */,
-				CF0C8E32193340EF006A38D5 /* TnTTestSegmentedViewController.h */,
-				CF0C8E33193340EF006A38D5 /* TnTTestSegmentedViewController.m */,
+				CF66C0F6193E29CF006A9CE2 /* TnTSelectTagViewController.h */,
+				CF66C0F7193E29CF006A9CE2 /* TnTSelectTagViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -321,7 +323,6 @@
 			files = (
 				CF3CFC9B19111B03000C7C83 /* Main_iPad.storyboard in Resources */,
 				CF3CFCA019111B03000C7C83 /* Images.xcassets in Resources */,
-				CF87495F1938F15F003950B4 /* TnTCustomTextViewController.xib in Resources */,
 				CF3CFC9819111B03000C7C83 /* Main_iPhone.storyboard in Resources */,
 				CF3CFC8F19111B03000C7C83 /* InfoPlist.strings in Resources */,
 			);
@@ -347,12 +348,13 @@
 				CF707B56192D09380016E420 /* LoginViewController.m in Sources */,
 				CF707B55192D09380016E420 /* UserDetailsViewController.m in Sources */,
 				CF707B57192D09380016E420 /* User.m in Sources */,
+				CF30FEC2193B970C003F9E40 /* TnTTipViewController.m in Sources */,
+				CF39BD4B193C9DC100D44D2C /* TnTEditandNewTipViewController.m in Sources */,
 				CF3CFC9119111B03000C7C83 /* main.m in Sources */,
+				CF66C0F8193E29CF006A9CE2 /* TnTSelectTagViewController.m in Sources */,
 				CF707B54192D09380016E420 /* SGKeychain.m in Sources */,
-				CF76E651191507EE002BF608 /* TnTViewController.m in Sources */,
 				CF87495E1938F15F003950B4 /* TnTCustomTextViewController.m in Sources */,
 				CF3CFC9519111B03000C7C83 /* TnTAppDelegate.m in Sources */,
-				CF0C8E35193347B1006A38D5 /* TnTTestSegmentedViewController.m in Sources */,
 				CFD959FD1935A8750011B68F /* JSONModel.m in Sources */,
 				CF707B58192D09380016E420 /* NavigationController.m in Sources */,
 				CF3CFCC1191128FB000C7C83 /* TnTTableViewController.m in Sources */,

@@ -35,6 +35,7 @@
     self.tipView = [[TnTCustomTextViewController alloc]init];
     [self.tipView addCustomViewinView:self.view];
     
+    
     if (self.tip) {
    
         
@@ -48,6 +49,7 @@
         if (titleString != nil && ![titleString isEqualToString:@"<null>"]) {
             self.titleTextField.text = titleString;
             self.titleTextField.enabled = NO;
+            [self.tipView setTipTitleWithString:titleString];
             
         }
         else{
@@ -145,9 +147,12 @@
     [self.navigationItem setHidesBackButton:editing animated:YES];
     self.titleTextField.enabled = editing;
     self.deleteButton.hidden = NO;
-    
+    self.tipView.segmentedSwitch.hidden = NO;
+    self.tipView.tipTitle.enabled = YES;
     if (!editing) {
         self.deleteButton.hidden = YES;
+        self.tipView.segmentedSwitch.hidden = YES;
+     self.tipView.tipTitle.enabled = NO;
     }
     
 

@@ -7,7 +7,7 @@
 // This is a TableViewController Class for Drupal Tips.
 
 #import "TnTTableViewController.h"
-#import "TnTViewController.h"
+#import "TnTTipViewController.h"
 #import "TipsandTricks.h"
 
 @interface TnTTableViewController ()
@@ -276,11 +276,11 @@
     
     if ([sender isKindOfClass:[UITableViewCell class]]) {
         
-        if ([segue.destinationViewController isKindOfClass:[TnTViewController class]]) {
+        if ([segue.destinationViewController isKindOfClass:[TnTTipViewController class]]) {
             
             if ([segue.identifier isEqualToString:@"push"]) {
                 
-                TnTViewController *newVC = (TnTViewController *)segue.destinationViewController;
+                TnTTipViewController *newVC = (TnTTipViewController *)segue.destinationViewController;
                 newVC.tip = [self.tipList objectAtIndex:[self.tableView indexPathForCell:sender].row];
                 
             }

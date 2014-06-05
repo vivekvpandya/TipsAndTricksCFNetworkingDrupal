@@ -29,6 +29,9 @@
     [super viewDidLoad];
     self.webView.hidden = NO;
     self.textView.hidden = YES;
+    self.webView.delegate = self;
+    self.segmentedSwitch.hidden = YES;
+    self.tipTitle.enabled = NO;
     
     
     // Do any additional setup after loading the view from its nib.
@@ -301,7 +304,7 @@
 -(void)paragraphText:(UIButton *)sender{
     
     
-    
+    /*
     NSRange selectedRange = [_textView selectedRange];
     if (selectedRange.location != NSNotFound && selectedRange.length != 0) {
         
@@ -326,7 +329,8 @@
         
         
     }
-    
+    */
+    [self insertHtmlTag:@"p" sender:sender];
     
 }
 
@@ -407,14 +411,8 @@
 }
 
 -(void)addCustomViewinView:(UIView *)targetView{
-    
-    float x = targetView.frame.origin.x;
-    float y = targetView.frame.origin.y;
-    float width = targetView.frame.size.width;
-    float height = targetView.frame.size.height;
-    
-    [self.view setFrame:CGRectMake(x, y, width, height)];
-    [targetView addSubview:self.view];
+self.view.frame = targetView.bounds;
+[targetView addSubview:self.view];
     
 }
 
@@ -423,4 +421,56 @@
 
 }
 
+
+// This UIWebView delegate method takes care of links to be opened with Safari
+-(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+   
+    
+    if (navigationType == UIWebViewNavigationTypeLinkClicked) {
+        [[UIApplication sharedApplication] openURL:[request URL]];
+        return NO;
+    }
+    return YES;
+
+}
+
+-(void)setTipTitleWithString:(NSString *)string{
+
+    self.tipTitle.text = string;
+    
+}
+
+-(void)insertHtmlTag:(NSString *)tag sender:(UIButton *)sender{
+
+    NSString *startTag = [NSString stringWithFormat:@"<%@>",tag];
+    NSString *endTag = [NSString stringWithFormat:@"</%@>",tag];
+    
+
+    NSRange selectedRange = [_textView selectedRange];
+    if (selectedRange.location != NSNotFound && selectedRange.length != 0) {
+        
+        [_textView.textStorage.mutableString insertString:startTag atIndex:selectedRange.location];
+        [_textView.textStorage.mutableString insertString:endTag atIndex:(selectedRange.location + selectedRange.length + [startTag length])];
+        _textView.selectedRange = NSMakeRange([_textView.textStorage.mutableString length], 0);
+        
+    }
+    else{
+        
+        if (sender.selected) {
+            
+            [_textView.textStorage.mutableString insertString:endTag atIndex:selectedRange.location];
+            _textView.selectedRange = NSMakeRange((selectedRange.location + [endTag length]), 0);
+        }
+        else
+        {
+            [_textView.textStorage.mutableString insertString:startTag atIndex:selectedRange.location];
+            _textView.selectedRange = NSMakeRange((selectedRange.location + [startTag length]), 0);
+        }
+        sender.selected = !sender.selected;
+        
+        
+    }
+
+
+}
 @end
