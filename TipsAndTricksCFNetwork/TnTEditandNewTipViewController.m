@@ -142,9 +142,11 @@ return @"Tag";
     // field_tag is NULL here please do something
     
     
-    NSDictionary *tipDictionary = @{@"_links": @{@"type":@{@"href":@"http://tntfoss-vivekvpandya.rhcloud.com/rest/type/node/tip" }},@"field_tag":@{@"target_id":tagString},@"body":@{@"value":[self.bodyTextView.textStorage mutableString]},@"title":@{@"value":self.tipTitle.text}};
+    NSDictionary *tipDictionary = @{@"_links": @{@"type":@{@"href":@"http://tntfoss-vivekvpandya.rhcloud.com/rest/type/node/tip" }},@"field_tag":@[@{@"target_id":@"1"}],@"body":@[@{@"value":[self.bodyTextView.textStorage mutableString]}],@"title":@[@{@"value":self.tipTitle.text}]};
    
-    
+ 
+                                        
+
     NSError *conversionerror;
     NSData *jsonData =  [NSJSONSerialization dataWithJSONObject:tipDictionary options:kNilOptions error:&conversionerror];
     NSDictionary *jsonDic = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:NULL];
