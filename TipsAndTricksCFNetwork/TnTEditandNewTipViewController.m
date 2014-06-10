@@ -17,7 +17,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *bodyTextView;
 - (IBAction)switchEditor:(id)sender;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic,strong) NSString *tag;
+@property (nonatomic,strong) NSDictionary *tag;
 
 @end
 
@@ -36,14 +36,30 @@
     return self;
 }
 
+-(NSDictionary *)tip{
+
+    if (!_tip) {
+        _tip = [[NSDictionary alloc]init];
+    
+    }
+    return _tip;
+
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.bodyWebView.hidden = YES;
     self.bodyTextView.hidden = NO;
-    
+    [self.editorSwitch setSelectedSegmentIndex:1];
     self.bodyWebView.delegate = self;
     
+    if (self.tip != nil) {
+        
+    
+        NSLog(@"entered");
+        NSLog(@"%@",self.tip);
+           }
    
     
     // Do any additional setup after loading the view.
@@ -52,7 +68,7 @@
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [self.tableView reloadData];
-    NSLog(@"%@",self.tag);
+    //NSLog(@"%@",self.tag);
 
 }
 - (void)didReceiveMemoryWarning
@@ -83,7 +99,7 @@ return @"Tag";
     cell = [tableView dequeueReusableCellWithIdentifier:@"tag" forIndexPath:indexPath];
     if (self.tag) {
         
-        cell.detailTextLabel.text = self.tag;
+        cell.detailTextLabel.text = [self.tag objectForKey:@"term"];
     }
     
     return cell;
@@ -122,35 +138,18 @@ return @"Tag";
     
     
     
-    NSNumber *field_tag;
-    if ([self.tag isEqualToString:@"Linux"]) {
-        field_tag = [NSNumber numberWithInt:1];
-    }
-    else if([self.tag isEqualToString:@"Drupal"])
-    {
-        field_tag = [NSNumber numberWithInt:2];
-    }
-    else{
-    field_tag = 0;
-    }
     
-    NSString *tagString = [NSString stringWithFormat:@"\"%@\"",@"1"];
-    
-    
-    NSLog(@"%@",tagString);
 
     // field_tag is NULL here please do something
     
     
-    NSDictionary *tipDictionary = @{@"_links": @{@"type":@{@"href":@"http://tntfoss-vivekvpandya.rhcloud.com/rest/type/node/tip" }},@"field_tag":@[@{@"target_id":@"1"}],@"body":@[@{@"value":[self.bodyTextView.textStorage mutableString]}],@"title":@[@{@"value":self.tipTitle.text}]};
+    NSDictionary *tipDictionary = @{@"_links": @{@"type":@{@"href":@"http://tntfoss-vivekvpandya.rhcloud.com/rest/type/node/tip" }},@"field_tag":@[@{@"target_id":[self.tag objectForKey:@"termID"]}],@"body":@[@{@"value":[self.bodyTextView.textStorage mutableString],@"format":@"full_html"}],@"title":@[@{@"value":self.tipTitle.text}]};
    
  
                                         
 
     NSError *conversionerror;
     NSData *jsonData =  [NSJSONSerialization dataWithJSONObject:tipDictionary options:kNilOptions error:&conversionerror];
-    NSDictionary *jsonDic = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:NULL];
-    
     
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSMutableURLRequest *postRequestURL = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://tntfoss-vivekvpandya.rhcloud.com/entity/node"]];
@@ -448,7 +447,7 @@ return @"Tag";
 -(void)backButtonSelected:(id)object{
     NSLog(@"ok delegation");
 
-    [self.tip setObject:object forKey:@"tag"];
+    //[self.tip setObject:object forKey:@"tag"];
     self.tag = object;
 }
 

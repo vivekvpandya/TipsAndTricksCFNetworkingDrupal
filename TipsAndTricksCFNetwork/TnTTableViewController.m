@@ -9,11 +9,13 @@
 #import "TnTTableViewController.h"
 #import "TnTTipViewController.h"
 #import "TipsandTricks.h"
+#import "User.h"
 
 @interface TnTTableViewController ()
 
 @property (nonatomic,strong) NSURLSession *session; // to hold NSURLSession object
 @property (nonatomic,strong) NSArray *tipList; // to hold NSDictionaries that are created with JSON Response and each NSDictionary represent tip object i.e it will contain all the fields which you have enabled from RESTExport for the view
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *addTipButton;
 
 
 
@@ -166,6 +168,12 @@
 {
     [super viewDidLoad];
     
+    User *user = [User sharedInstance];
+    
+    if (!user.name) {
+        self.addTipButton.enabled =  NO;
+    }
+    
     
     
        // Uncomment the following line to preserve selection between presentations.
@@ -182,6 +190,15 @@
     [super viewWillAppear:animated];
     [self getData];
    
+    User *user = [User sharedInstance];
+    
+    if (user.name) {
+        self.addTipButton.enabled = YES;
+    }
+    else
+    {
+        self.addTipButton.enabled = NO;
+    }
 
     
    }

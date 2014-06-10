@@ -59,7 +59,6 @@
 }
 
 #pragma mark - UITableViewDataSource
-
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
@@ -67,16 +66,16 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return [self.tags count];
 }
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell;
     
     cell = [tableView dequeueReusableCellWithIdentifier:@"tagValue" forIndexPath:indexPath];
-    cell.textLabel.text = [self.tags objectAtIndex:indexPath.row];
+    cell.textLabel.text = [[self.tags objectAtIndex:indexPath.row] objectForKey:@"term"];
     
     if (self.selectedValue) {
-        if ([cell.textLabel.text isEqualToString:self.selectedValue]) {
-            [cell
-             setAccessoryType:UITableViewCellAccessoryCheckmark];
+        if ([cell.textLabel.text isEqualToString:[self.selectedValue objectForKey:@"term"]]) {
+            [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
         }
     }
     return cell;

@@ -10,12 +10,16 @@
 #import "SGKeychain.h"
 #import "User.h"
 #import "TipsandTricks.h"
+#import "TnTEditandNewTipViewController.h"
 
 @interface TnTTipViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *tipTitle;
 @property (weak, nonatomic) IBOutlet UITextField *tipLastUpdate;
 @property (weak, nonatomic) IBOutlet UIWebView *tipBody;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *editorSwitch;
+@property (weak, nonatomic) IBOutlet UITextView *tipTextView;
+@property (strong,nonatomic) NSDictionary *tagValueToUpdate;
 
 @end
 
@@ -41,11 +45,15 @@
     [super viewDidLoad];
   
     if (self.tip) {
+        self.navigationItem.rightBarButtonItem = self.editButtonItem;
         self.tipTitle.text = [self.tip objectForKey:@"title"];
         self.tipLastUpdate.text = [self.tip objectForKey:@"changed"];
         [self.tipBody loadHTMLString:[self.tip objectForKey:@"body"] baseURL:nil];
+        self.editorSwitch.hidden = YES;
+        self.tipTextView.hidden = YES;
+        self.tipTextView.text = [self.tip objectForKey:@"body"];
         
-        self.navigationItem.rightBarButtonItem = self.editButtonItem;
+        
         
     }
     // Do any additional setup after loading the view.
@@ -57,16 +65,48 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)viewDidAppear:(BOOL)animated{
+
+    [super viewDidAppear:animated];
+    [self.tableView reloadData];
+
+}
+
 /*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
+ */
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    
+    if ([segue.identifier isEqualToString:@"editModal"]) {
+     
+        TnTEditandNewTipViewController *editVc = (TnTEditandNewTipViewController *)segue.destinationViewController;
+        editVc.tip = self.tip ;
+        
+      
+        
+        
+    }
+    if ([segue.identifier isEqualToString:@"editTag"]) {
+        TnTSelectTagViewController *tagVC = (TnTSelectTagViewController *)segue.destinationViewController;
+        tagVC.delegate = self;
+        if (self.tagValueToUpdate) {
+            tagVC.selectedValue = [self.tagValueToUpdate objectForKey:@"term"];
+
+        }
+        else{
+            [tagVC.selectedValue = self.tip objectForKey:@"tag"];
+        
+        }
+        
+    }
+    
 }
-*/
+
 
 #pragma mark - UITableViewDataSource
 
@@ -129,7 +169,14 @@
     switch (indexPath.section) {
         case TAG_SECTION:
             cell = [tableView dequeueReusableCellWithIdentifier:@"tag" forIndexPath:indexPath];
-            cell.textLabel.text = [self.tip objectForKey:@"tag"];
+            cell.detailTextLabel.text = [self.tip objectForKey:@"tag"];
+            if (self.editing) {
+                [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+                if (self.tagValueToUpdate) {
+                    NSLog(@"inside");
+                    cell.detailTextLabel.text = [self.tagValueToUpdate objectForKey:@"term"];
+                }
+            }
             break;
         case DELTE_SECTION:
         {
@@ -157,7 +204,336 @@
 {
 
     [super setEditing:editing animated:animated];
+    self.editorSwitch.hidden = NO;
+     [self.editorSwitch setSelectedSegmentIndex:1];
+    self.tipTextView.hidden = NO;
+    self.tipTitle.enabled = YES;
+    
     [self.tableView reloadData];
+    
+    if (!self.editing) {
+        
+        [self.editorSwitch setSelectedSegmentIndex:2];
+        self.editorSwitch.hidden = YES;
+        self.tipTextView.hidden = YES;
+        self.tipTitle.enabled = NO;
+        
+        [self.tableView reloadData];
+        
+        
+        // PATCH tip code  will go here
+        NSString *tagID = [NSString string];
+        if (self.tagValueToUpdate) {
+            tagID = [self.tagValueToUpdate objectForKey:@"termID"];
+            
+        }
+        else{
+        
+            NSString *tagString = [self.tip objectForKey:@"tag"];
+            if ([tagString isEqualToString:@"Linux"]) {
+                tagID = @"1";
+            }
+            else if ([tagString isEqualToString:@"Drupal"])
+            {
+            tagID = @"2";
+            }
+            
+        }
+        
+        NSDictionary *tipDictionary = @{@"_links": @{@"type":@{@"href":@"http://tntfoss-vivekvpandya.rhcloud.com/rest/type/node/tip" }},@"field_tag":@[@{@"target_id":tagID}],@"body":@[@{@"value":[self.tipTextView.textStorage mutableString],@"format":@"full_html"}],@"title":@[@{@"value":self.tipTitle.text}]};
+        
+        
+        
+        
+        NSError *conversionerror;
+        NSData *jsonData =  [NSJSONSerialization dataWithJSONObject:tipDictionary options:kNilOptions error:&conversionerror];
+        
+        NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+        NSMutableURLRequest *postRequestURL = [NSMutableURLRequest requestWithURL:[TipsandTricks createURLForNodeID:[self.tip objectForKey:@"nid"]]];
+        [postRequestURL setHTTPMethod:@"PATCH"];
+        [postRequestURL setHTTPBody:jsonData];
+        
+        User *user = [User sharedInstance];
+        
+        [config setHTTPAdditionalHeaders:@{@"Authorization":user.basicAuthString,@"Content-Type":@"application/hal+json"}];
+        NSURLSession *session  = [NSURLSession sessionWithConfiguration:config];
+        
+        NSURLSessionDataTask *patchTask = [session dataTaskWithRequest:postRequestURL completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            
+            if(!error){
+                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                if (httpResponse.statusCode == 204) {
+                    NSLog(@"Updated");
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.navigationController popToRootViewControllerAnimated:YES];
+                    });
+                    
+                }
+                else{
+                    
+                    NSLog(@"%ld",(long)httpResponse.statusCode);
+                    NSDictionary *errorDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:NULL];
+                    NSLog(@"%@",errorDictionary);
+                    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error While Update" message:[NSString stringWithFormat:@"%ld",(long)httpResponse.statusCode ]delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+                    [alert show];
+                }
+            }
+            else{
+                
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error While Update" message:error.localizedDescription delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+            
+                [alert show];
+            }
+        }];
+        
+        
+        
+        
+        
+        [patchTask resume];
+        
+
+        
+
+        
+    }
+}
+
+-(BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender{
+
+    if (self.editing) {
+        return YES;
+    }
+    else{
+    
+        return NO;
+    }
+}
+- (IBAction)changeEditMode:(id)sender {
+    
+    
+    UISegmentedControl *segmentedController = (UISegmentedControl *)sender;
+    
+    NSInteger index  = segmentedController.selectedSegmentIndex;
+    
+    if (index == 0) {
+       
+        self.tipTextView.hidden = YES;
+        
+        [self.tipBody loadHTMLString:self.tipTextView.textStorage.mutableString baseURL:nil];
+    }
+    if (index == 1) {
+        self.tipTextView.hidden = NO;
+        
+    }
+    
+}
+
+-(UIView *)inputAccessoryView{
+    
+    CGRect accessFrame = CGRectMake(0.0,0.0,100.0,40.0);
+    UIView *inputAccessoryView = [[UIView alloc]initWithFrame:accessFrame];
+    inputAccessoryView.backgroundColor = [UIColor blackColor];
+    
+    UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    doneButton.frame = CGRectMake(0.0,0.0,50.0,40.0);
+    [doneButton setTitle:@"Done" forState:UIControlStateNormal];
+    [doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    // [doneButton addTarget:self action:@selector(hideKeyBoard) forControlEvents:UIControlEventTouchUpInside];
+    [doneButton addTarget:self action:@selector(hideKeyBoard) forControlEvents:UIControlEventTouchUpInside];
+    [inputAccessoryView addSubview:doneButton];
+    UIButton *boldButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    boldButton.frame = CGRectMake(50.0, 0.0,30.0, 40.0);
+    
+    [boldButton setTitle:@"B" forState:UIControlStateNormal];
+    [boldButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [boldButton setTitleColor:[UIColor blueColor] forState:UIControlStateSelected];
+    [boldButton addTarget:self action:@selector(boldText:) forControlEvents:UIControlEventTouchUpInside];
+    [inputAccessoryView addSubview:boldButton];
+    
+    UIButton *italicButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    italicButton.frame = CGRectMake(80.0, 0.0, 30.0, 40.0);
+    [italicButton setTitle:@"I" forState:UIControlStateNormal];
+    [italicButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [italicButton addTarget:self action:@selector(italicText:) forControlEvents:UIControlEventTouchUpInside];
+    [inputAccessoryView addSubview:italicButton];
+    
+    UIButton *underlineButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    underlineButton.frame = CGRectMake(110.0, 0.0, 30.0, 40.0);
+    [underlineButton setTitle:@"U" forState:UIControlStateNormal];
+    [underlineButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [underlineButton addTarget:self action:@selector(underLineText:) forControlEvents:UIControlEventTouchUpInside];
+    [inputAccessoryView addSubview:underlineButton];
+    
+    UIButton *strikeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    strikeButton.frame = CGRectMake(140.0, 0.0, 30.0, 40.0);
+    [strikeButton setTitle:@"≁" forState:UIControlStateNormal];
+    [strikeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [strikeButton addTarget:self action:@selector(strikeText:) forControlEvents:UIControlEventTouchUpInside];
+    [inputAccessoryView addSubview:strikeButton];
+    
+    UIButton *blockquoteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    blockquoteButton.frame = CGRectMake(170.0, 0.0, 30.0, 40.0);
+    [blockquoteButton setTitle:@"❝" forState:UIControlStateNormal];
+    [blockquoteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [blockquoteButton addTarget:self action:@selector(blockquoteText:) forControlEvents:UIControlEventTouchUpInside];
+    [inputAccessoryView addSubview:blockquoteButton];
+    
+    
+    UIButton *paragraphButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    paragraphButton.frame = CGRectMake(200.0, 0.0, 30.0, 40.0);
+    [paragraphButton setTitle:@"¶" forState:UIControlStateNormal];
+    [paragraphButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [paragraphButton addTarget:self action:@selector(paragraphText:) forControlEvents:UIControlEventTouchUpInside];
+    [inputAccessoryView addSubview:paragraphButton];
+    
+    UIButton *linkButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    linkButton.frame = CGRectMake(230.0, 0.0, 30.0, 40.0);
+    [linkButton setTitle:@"🔗" forState:UIControlStateNormal];
+    [linkButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [linkButton addTarget:self action:@selector(addLink) forControlEvents:UIControlEventTouchUpInside];
+    [inputAccessoryView addSubview:linkButton];
+    
+    UIButton *imageButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    imageButton.frame = CGRectMake(260.0, 0.0, 30.0, 40.0);
+    [imageButton setTitle:@"🌈" forState:UIControlStateNormal];
+    [imageButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [imageButton addTarget:self action:@selector(uploadImage) forControlEvents:UIControlEventTouchUpInside];
+    [inputAccessoryView addSubview:imageButton];
+    
+    
+    return inputAccessoryView;
+    
+    
+}
+-(void)insertHtmlTag:(NSString *)tag sender:(UIButton *)sender{
+    
+    NSString *startTag = [NSString stringWithFormat:@"<%@>",tag];
+    NSString *endTag = [NSString stringWithFormat:@"</%@>",tag];
+    
+    
+    NSRange selectedRange = [_tipTextView selectedRange];
+    if (selectedRange.location != NSNotFound && selectedRange.length != 0) {
+        
+        [_tipTextView.textStorage.mutableString insertString:startTag atIndex:selectedRange.location];
+        [_tipTextView.textStorage.mutableString insertString:endTag atIndex:(selectedRange.location + selectedRange.length + [startTag length])];
+        _tipTextView.selectedRange = NSMakeRange([_tipTextView.textStorage.mutableString length], 0);
+        
+    }
+    else{
+        
+        if (sender.selected) {
+            
+            [_tipTextView.textStorage.mutableString insertString:endTag atIndex:selectedRange.location];
+            _tipTextView.selectedRange = NSMakeRange((selectedRange.location + [endTag length]), 0);
+        }
+        else
+        {
+            [_tipTextView.textStorage.mutableString insertString:startTag atIndex:selectedRange.location];
+            _tipTextView.selectedRange = NSMakeRange((selectedRange.location + [startTag length]), 0);
+        }
+        sender.selected = !sender.selected;
+        
+        
+    }
+    
+    
+}
+
+-(void)paragraphText:(UIButton *)sender{
+    
+    
+    [self insertHtmlTag:@"p" sender:sender];
+    
+}
+-(void)hideKeyBoard{
+    
+    [_tipTextView resignFirstResponder];
+}
+
+-(void)boldText:(UIButton *)sender{
+    [self insertHtmlTag:@"b" sender:sender];
+    
+}
+
+-(void)italicText:(UIButton *)sender{
+    [self insertHtmlTag:@"em" sender:sender];
+    
+}
+
+-(void)underLineText:(UIButton *)sender{
+    [self insertHtmlTag:@"u" sender:sender];
+    
+}
+-(void)strikeText:(UIButton *)sender{
+    [self insertHtmlTag:@"strike" sender:sender];
+}
+-(void)blockquoteText:(UIButton *)sender{
+    
+    [self insertHtmlTag:@"blockquote" sender:sender];
+}
+
+-(void)addLink{
+    
+    UIAlertView *addLinkAlert = [[UIAlertView alloc]initWithTitle:@"Enter URL for link here" message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Add", nil];
+    [addLinkAlert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+    [addLinkAlert show];
+    addLinkAlert.tag = 1;
+    
+    
+}
+
+#pragma mark UIAlertView Delegate
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (alertView.tag == 1) {
+        
+        // cancel button will have index 0
+        if (buttonIndex == 1) {
+            
+            
+            NSRange selectedRange = [_tipTextView selectedRange];
+            
+            if (selectedRange.location != NSNotFound && selectedRange.length != 0) {
+                
+                NSString *linkString = [NSString stringWithFormat:@"<a href='%@'>",[alertView textFieldAtIndex:0].text];
+                
+                [_tipTextView.textStorage.mutableString insertString:linkString atIndex:selectedRange.location];
+                [_tipTextView.textStorage.mutableString insertString:@"</a>" atIndex:(selectedRange.location + selectedRange.length + [linkString length])];
+                _tipTextView.selectedRange = NSMakeRange([_tipTextView.textStorage.mutableString length], 0);
+                
+            }
+            else{
+                
+                NSString *linkString = [NSString stringWithFormat:@"<a href='%@'>%@</a>",[alertView textFieldAtIndex:0].text ,[alertView textFieldAtIndex:0].text ];
+                
+                [_tipTextView.textStorage.mutableString insertString:linkString atIndex:selectedRange.location];
+                
+                
+            }
+            
+        }
+    }
+    
+    
+    
+    
+}
+
+-(BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView{
+    
+    if ([alertView textFieldAtIndex:0]) {
+        if ([alertView textFieldAtIndex:0].text.length > 0) {
+            return YES;
+            
+        }
+        else
+            return  NO;
+    }
+    else{
+        return NO;
+    }
     
 }
 
@@ -241,6 +617,21 @@
     
     
     
+}
+
+#pragma mark - TnTSelectTagViewController delegate
+
+-(void)backButtonSelected:(id)object{
+
+  //  NSDictionary *tag = (NSDictionary *)object;
+    
+    if (self.editing) {
+        
+        self.tagValueToUpdate = object;
+        [self.tableView reloadData];
+        
+    }
+
 }
 
 @end
