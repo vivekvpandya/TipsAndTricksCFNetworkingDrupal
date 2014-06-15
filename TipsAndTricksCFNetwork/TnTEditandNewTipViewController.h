@@ -11,7 +11,7 @@
 
 @interface TnTEditandNewTipViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate,UIWebViewDelegate, TnTSelectTagProtocol>
 
-@property (nonatomic,strong) NSDictionary *tip;
+@property (nonatomic,strong) NSMutableDictionary *tip;
 - (IBAction)cancel:(id)sender;
 - (IBAction)done:(id)sender;
 

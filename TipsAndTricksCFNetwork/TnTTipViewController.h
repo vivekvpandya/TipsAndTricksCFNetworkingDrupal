@@ -10,5 +10,5 @@
 #import "TnTSelectTagViewController.h"
 @interface TnTTipViewController : UIViewController <UITableViewDataSource,UITableViewDelegate, UIAlertViewDelegate, TnTSelectTagProtocol, UIWebViewDelegate>
 
-@property (nonatomic,strong) NSDictionary *tip;
+@property (nonatomic,strong) NSMutableDictionary *tip;
 @end

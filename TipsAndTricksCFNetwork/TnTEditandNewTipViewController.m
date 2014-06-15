@@ -36,10 +36,10 @@
     return self;
 }
 
--(NSDictionary *)tip{
+-(NSMutableDictionary *)tip{
 
     if (!_tip) {
-        _tip = [[NSDictionary alloc]init];
+        _tip = [[NSMutableDictionary alloc]init];
     
     }
     return _tip;
@@ -97,11 +97,7 @@ return @"Tag";
     UITableViewCell *cell = [[UITableViewCell alloc]init];
     
     cell = [tableView dequeueReusableCellWithIdentifier:@"tag" forIndexPath:indexPath];
-    if (self.tag) {
-        
-        cell.detailTextLabel.text = [self.tag objectForKey:@"term"];
-    }
-    
+    cell.detailTextLabel.text = [self.tip objectForKey:@"tag"];
     return cell;
     
 
@@ -121,7 +117,7 @@ return @"Tag";
         TnTSelectTagViewController *vc = (TnTSelectTagViewController *)segue.destinationViewController;
         vc.delegate = self;
       
-        vc.selectedValue = self.tag;
+        vc.selectedValue = [self.tip objectForKey:@"tag"];
         
         
     }
@@ -137,13 +133,26 @@ return @"Tag";
 - (IBAction)done:(id)sender {
     
     
+    NSString *tagID = [NSString string];
     
+    
+    NSString *tagString = [self.tip objectForKey:@"tag"];
+    if ([tagString isEqualToString:@"Linux"]) {
+        tagID = @"1";
+    }
+    else if ([tagString isEqualToString:@"Drupal"])
+    {
+        tagID = @"2";
+    }
+    else{
+        tagID =@"1"; // Default tag is "Linux" as we can not leave this field empty
+    }
     
 
     // field_tag is NULL here please do something
     
     
-    NSDictionary *tipDictionary = @{@"_links": @{@"type":@{@"href":@"http://tntfoss-vivekvpandya.rhcloud.com/rest/type/node/tip" }},@"field_tag":@[@{@"target_id":[self.tag objectForKey:@"termID"]}],@"body":@[@{@"value":[self.bodyTextView.textStorage mutableString],@"format":@"full_html"}],@"title":@[@{@"value":self.tipTitle.text}]};
+    NSDictionary *tipDictionary = @{@"_links": @{@"type":@{@"href":@"http://tntfoss-vivekvpandya.rhcloud.com/rest/type/node/tip" }},@"field_tag":@[@{@"target_id":tagID}],@"body":@[@{@"value":[self.bodyTextView.textStorage mutableString],@"format":@"full_html"}],@"title":@[@{@"value":self.tipTitle.text}]};
    
  
                                         
@@ -166,20 +175,33 @@ return @"Tag";
         if(!error){
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         if (httpResponse.statusCode == 201) {
-            NSLog(@"created");
-             [self dismissViewControllerAnimated:YES completion:nil];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSLog(@"created");
+                [[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:NO];
+                [self dismissViewControllerAnimated:YES completion:nil];
+            });
+        
         }
         else{
-        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
             NSLog(@"%ld",(long)httpResponse.statusCode);
             NSDictionary *errorDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:NULL];
             NSLog(@"%@",errorDictionary);
-             [self dismissViewControllerAnimated:YES completion:nil];
+            [[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:NO];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        });
+            
         }
         }
         else{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:NO];
+
+                NSLog(@"%@",error.localizedDescription);
+            });
         
-            NSLog(@"%@",error.localizedDescription);
+            
         }
     }];
     
@@ -188,6 +210,7 @@ return @"Tag";
     
     
     [postTask resume];
+    [[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:YES];
     
     
    
@@ -447,8 +470,8 @@ return @"Tag";
 -(void)backButtonSelected:(id)object{
     NSLog(@"ok delegation");
 
-    //[self.tip setObject:object forKey:@"tag"];
-    self.tag = object;
+    [self.tip setObject:object forKey:@"tag"];
+   // self.tag = object;
 }
 
 

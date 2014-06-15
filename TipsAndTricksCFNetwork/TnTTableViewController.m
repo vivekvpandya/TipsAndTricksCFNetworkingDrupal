@@ -298,7 +298,7 @@
             if ([segue.identifier isEqualToString:@"push"]) {
                 
                 TnTTipViewController *newVC = (TnTTipViewController *)segue.destinationViewController;
-                newVC.tip = [self.tipList objectAtIndex:[self.tableView indexPathForCell:sender].row];
+                newVC.tip = [[self.tipList objectAtIndex:[self.tableView indexPathForCell:sender].row] mutableCopy];
                 
             }
         }

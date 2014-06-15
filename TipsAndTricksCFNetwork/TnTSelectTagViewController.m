@@ -71,10 +71,10 @@
     UITableViewCell *cell;
     
     cell = [tableView dequeueReusableCellWithIdentifier:@"tagValue" forIndexPath:indexPath];
-    cell.textLabel.text = [[self.tags objectAtIndex:indexPath.row] objectForKey:@"term"];
+    cell.textLabel.text = [self.tags objectAtIndex:indexPath.row];
     
     if (self.selectedValue) {
-        if ([cell.textLabel.text isEqualToString:[self.selectedValue objectForKey:@"term"]]) {
+        if ([cell.textLabel.text isEqualToString:self.selectedValue]) {
             [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
         }
     }

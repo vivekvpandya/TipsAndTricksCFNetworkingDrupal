@@ -45,7 +45,7 @@
     [super viewDidLoad];
   
     if (self.tip) {
-        self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
         self.tipTitle.text = [self.tip objectForKey:@"title"];
         self.tipLastUpdate.text = [self.tip objectForKey:@"changed"];
         [self.tipBody loadHTMLString:[self.tip objectForKey:@"body"] baseURL:nil];
@@ -66,12 +66,35 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-
     [super viewDidAppear:animated];
     [self.tableView reloadData];
-
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+
+    User *user = [User sharedInstance];
+    BOOL isAdmin = NO;
+    if (user.roles) {
+        for( id role in user.roles)
+        {
+            if ([role isEqualToString:@"administrator"]) {
+             
+                isAdmin = YES;
+            }
+            
+            
+        }
+    }
+    
+    
+    if (isAdmin) {
+        self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    }
+    else{
+        self.navigationItem.rightBarButtonItem = nil;
+        //self.editing = NO;
+    }
+}
 /*
 #pragma mark - Navigation
 
@@ -85,7 +108,7 @@
     if ([segue.identifier isEqualToString:@"editModal"]) {
      
         TnTEditandNewTipViewController *editVc = (TnTEditandNewTipViewController *)segue.destinationViewController;
-        editVc.tip = self.tip ;
+        editVc.tip = [self.tip  mutableCopy];
         
       
         
@@ -94,14 +117,14 @@
     if ([segue.identifier isEqualToString:@"editTag"]) {
         TnTSelectTagViewController *tagVC = (TnTSelectTagViewController *)segue.destinationViewController;
         tagVC.delegate = self;
-        if (self.tagValueToUpdate) {
-            tagVC.selectedValue = [self.tagValueToUpdate objectForKey:@"term"];
-
-        }
-        else{
-            [tagVC.selectedValue = self.tip objectForKey:@"tag"];
         
-        }
+          //  tagVC.selectedValue = [self.tagValueToUpdate objectForKey:@"term"];
+
+        
+        
+            tagVC.selectedValue = [self.tip objectForKey:@"tag"];
+        
+        
         
     }
     
@@ -172,10 +195,7 @@
             cell.detailTextLabel.text = [self.tip objectForKey:@"tag"];
             if (self.editing) {
                 [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-                if (self.tagValueToUpdate) {
-                    NSLog(@"inside");
-                    cell.detailTextLabel.text = [self.tagValueToUpdate objectForKey:@"term"];
-                }
+               
             }
             break;
         case DELTE_SECTION:
@@ -200,6 +220,8 @@
 
 }
 
+
+
 -(void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
 
@@ -219,15 +241,11 @@
         self.tipTitle.enabled = NO;
         
         [self.tableView reloadData];
-        
+      
         
         // PATCH tip code  will go here
         NSString *tagID = [NSString string];
-        if (self.tagValueToUpdate) {
-            tagID = [self.tagValueToUpdate objectForKey:@"termID"];
-            
-        }
-        else{
+        
         
             NSString *tagString = [self.tip objectForKey:@"tag"];
             if ([tagString isEqualToString:@"Linux"]) {
@@ -237,8 +255,11 @@
             {
             tagID = @"2";
             }
+            else{
+                tagID =@"1"; // Default tag is "Linux" as we can not leave this field empty
+            }
             
-        }
+        
         
         NSDictionary *tipDictionary = @{@"_links": @{@"type":@{@"href":@"http://tntfoss-vivekvpandya.rhcloud.com/rest/type/node/tip" }},@"field_tag":@[@{@"target_id":tagID}],@"body":@[@{@"value":[self.tipTextView.textStorage mutableString],@"format":@"full_html"}],@"title":@[@{@"value":self.tipTitle.text}]};
         
@@ -255,7 +276,10 @@
         
         User *user = [User sharedInstance];
         
-        [config setHTTPAdditionalHeaders:@{@"Authorization":user.basicAuthString,@"Content-Type":@"application/hal+json"}];
+        if (user.basicAuthString) {
+            [config setHTTPAdditionalHeaders:@{@"Authorization":user.basicAuthString,@"Content-Type":@"application/hal+json"}];
+        }
+        
         NSURLSession *session  = [NSURLSession sessionWithConfiguration:config];
         
         NSURLSessionDataTask *patchTask = [session dataTaskWithRequest:postRequestURL completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -270,19 +294,31 @@
                     
                 }
                 else{
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                       
+                        NSLog(@"%ld",(long)httpResponse.statusCode);
+                        NSDictionary *errorDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:NULL];
+                        NSLog(@"%@",errorDictionary);
+                        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error While Update" message:[NSString stringWithFormat:@"%ld",(long)httpResponse.statusCode ]delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+                        alert.tag = 2;
+                        [alert show];
+                        
+                        
+                    });
                     
-                    NSLog(@"%ld",(long)httpResponse.statusCode);
-                    NSDictionary *errorDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:NULL];
-                    NSLog(@"%@",errorDictionary);
-                    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error While Update" message:[NSString stringWithFormat:@"%ld",(long)httpResponse.statusCode ]delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
-                    [alert show];
                 }
             }
             else{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error While Update" message:error.localizedDescription delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+                    [alertView show];
+                    alertView.tag = 3;
+                  
+                    
+                });
                 
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error While Update" message:error.localizedDescription delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
             
-                [alert show];
             }
         }];
         
@@ -450,6 +486,7 @@
 -(void)hideKeyBoard{
     
     [_tipTextView resignFirstResponder];
+    [_tipTitle resignFirstResponder];
 }
 
 -(void)boldText:(UIButton *)sender{
@@ -516,7 +553,21 @@
         }
     }
     
-    
+    switch (alertView.tag) {
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        {
+            NSLog(@"alert");
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+            break;
+            
+        default:
+            break;
+    }
     
     
 }
@@ -542,79 +593,93 @@
     
     User *user = [User sharedInstance];
     
-    NSMutableURLRequest *deleteRequest  = [[NSMutableURLRequest alloc]initWithURL:[TipsandTricks createURLForNodeID:[self.tip objectForKey:@"nid"]]];
-    
-    [deleteRequest setHTTPMethod:@"DELETE"];
-    
-    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-    [config setHTTPAdditionalHeaders:@{@"Authorization":user.basicAuthString}];
-    
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
-    
-    NSURLSessionDataTask *deleteTask = [session dataTaskWithRequest:deleteRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    if (user.basicAuthString) {
+       
+        NSMutableURLRequest *deleteRequest  = [[NSMutableURLRequest alloc]initWithURL:[TipsandTricks createURLForNodeID:[self.tip objectForKey:@"nid"]]];
+        
+        [deleteRequest setHTTPMethod:@"DELETE"];
+        
+        NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
         
         
-        if (!error) {
+        
+        NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
+        
+        NSURLSessionDataTask *deleteTask = [session dataTaskWithRequest:deleteRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             
-            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
             
-            if (httpResponse.statusCode == 204) {
+            if (!error) {
                 
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-                    [self.navigationController popToRootViewControllerAnimated:YES];
-                });
+                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                
+                if (httpResponse.statusCode == 204) {
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                        [self.navigationController popToRootViewControllerAnimated:YES];
+                    });
+                    
+                }
+                else if(httpResponse.statusCode == 403){
+                    
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                        
+                        [user clearUserDetails];
+                        NSError *deleteCredError;
+                        [SGKeychain deletePasswordandUserNameForServiceName:@"Drupal 8" accessGroup:nil error:&deleteCredError];
+                        
+                        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error while deleting node" message:@"access forbidden" delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+                        alert.tag =5;
+                        [alert show];
+                        
+                        self.navigationItem.rightBarButtonItem = nil;
+                        [self.navigationItem setHidesBackButton:NO animated:YES];
+                        
+                        
+                        
+                        
+                    });
+                    
+                }
+                else{
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        
+                        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error while deleting node" message:[NSString stringWithFormat:@"%ld",(long)httpResponse.statusCode] delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+                        alert.tag = 6;
+                        [alert show];
+                        
+                    });
+                    
+                    
+                    
+                }
                 
             }
-            else if(httpResponse.statusCode == 403){
-                
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-                    
-                    [user clearUserDetails];
-                    NSError *deleteCredError;
-                    [SGKeychain deletePasswordandUserNameForServiceName:@"Drupal 8" accessGroup:nil error:&deleteCredError];
-                    
-                    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error while deleting node" message:@"access forbidden" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                    [alert show];
-                    
-                    self.navigationItem.rightBarButtonItem = nil;
-                    [self.navigationItem setHidesBackButton:NO animated:YES];
-                   
-                    
-                    
-                    
-                });
-                
-            }
-            else{
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    
-                    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-                    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error while deleting node" message:[NSString stringWithFormat:@"%ld",(long)httpResponse.statusCode] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                    [alert show];
-                    
-                });
-                
-                
+            else {
+                NSLog(@"delete failed due to %@ ",error.localizedDescription);
                 
             }
             
-        }
-        else {
-            NSLog(@"delete failed due to %@ ",error.localizedDescription);
             
-        }
+        }];
         
+        [deleteTask resume];
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         
-    }];
+
+    }
     
-    [deleteTask resume];
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    else
+    {
     
-    
+        UIAlertView *loginAlert = [[UIAlertView alloc]initWithTitle:@"Please Login" message:@"No credential provided" delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+        loginAlert.tag = 4;
+        [loginAlert show];
+    }
     
     
 }
@@ -627,7 +692,8 @@
     
     if (self.editing) {
         
-        self.tagValueToUpdate = object;
+        [self.tip setValue:object forKey:@"tag"];
+        
         [self.tableView reloadData];
         
     }
