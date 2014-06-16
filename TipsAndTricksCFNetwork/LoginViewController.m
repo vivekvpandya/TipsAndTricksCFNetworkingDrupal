@@ -10,6 +10,7 @@
 #import "SGKeychain.h"
 #import "User.h"
 #import "TipsandTricks.h"
+#import "TnTSignUpViewController.h"
 
 @interface LoginViewController ()
 
@@ -151,6 +152,15 @@
     [self.passwordTextField resignFirstResponder];
 }
 
+- (IBAction)loadSignUpView:(id)sender {
+    
+    
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+    TnTSignUpViewController *signUpViewController = [storyBoard instantiateViewControllerWithIdentifier:@"signUp"];
+    
+    [self.navigationController pushViewController:signUpViewController animated:YES];
+    
+}
 
 
 @end
