@@ -120,9 +120,18 @@
         
           //  tagVC.selectedValue = [self.tagValueToUpdate objectForKey:@"term"];
 
+        NSString *tagID = [NSString string];
         
+        NSString *tagString = [self.tip valueForKeyPath:@"tag"];
         
-            tagVC.selectedValue = [self.tip valueForKeyPath:@"tag"];
+        if ([tagString isEqualToString:@"Linux"]) {
+            tagID = @"1";
+        }
+        else{
+            tagID = @"2";
+        }
+        
+        tagVC.selectedValue = @{@"name":[self.tip valueForKeyPath:@"tag"],@"tid":tagID};
         
         
         
@@ -687,11 +696,11 @@
 
 -(void)backButtonSelected:(id)object{
 
-  //  NSDictionary *tag = (NSDictionary *)object;
+    NSDictionary *tag = (NSDictionary *)object;
     
     if (self.editing) {
         
-        [self.tip setValue:object forKeyPath:@"tag"];
+        [self.tip setValue:[tag objectForKey:@"name"] forKeyPath:@"tag"];
         
         [self.tableView reloadData];
         

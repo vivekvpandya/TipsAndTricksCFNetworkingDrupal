@@ -6,12 +6,14 @@
 //  Copyright (c) 2014 Vivek Pandya. All rights reserved.
 //
 
+#import "TipsandTricks.h"
 #import "TnTSelectTagViewController.h"
 
 
 @interface TnTSelectTagViewController ()
 
 @property (nonatomic,strong) NSArray *tags; // Actually you should load all related taxonomy terms here from your site but currently Drupal 8 has no REST api for that
+
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 
@@ -32,6 +34,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self getTags]; // first time load tags from server
+    
    
     // Do any additional setup after loading the view.
 }
@@ -48,15 +52,15 @@
     // Dispose of any resources that can be recreated.
 }
 
--(NSArray *)tags{
+-(void)setTags:(NSArray *)tags{
 
-    if(!_tags){
-        _tags = @[@"Drupal",@"Linux"];
-    
-    }
-
-    return _tags;
+    _tags = tags;
+    [self.tableView reloadData];
 }
+
+
+
+
 
 #pragma mark - UITableViewDataSource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -71,10 +75,10 @@
     UITableViewCell *cell;
     
     cell = [tableView dequeueReusableCellWithIdentifier:@"tagValue" forIndexPath:indexPath];
-    cell.textLabel.text = [self.tags objectAtIndex:indexPath.row];
+    cell.textLabel.text = [[self.tags objectAtIndex:indexPath.row] objectForKey:@"name"];
     
     if (self.selectedValue) {
-        if ([cell.textLabel.text isEqualToString:self.selectedValue]) {
+        if ([cell.textLabel.text isEqualToString:[self.selectedValue objectForKey:@"name"]]) {
             [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
         }
     }
@@ -114,7 +118,82 @@
 }
 */
 
+-(void)getTags{
+    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 
+    NSMutableURLRequest *tagRequest = [NSMutableURLRequest requestWithURL:[TipsandTricks createURLForPath:@"vocabulary/foss"]];
+    
+    NSURLSessionConfiguration *config  = [NSURLSessionConfiguration defaultSessionConfiguration];
+    [tagRequest setHTTPMethod:@"GET"];
+    
+    
+    [tagRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
+    
+    
+    NSURLSessionDataTask *getTagTask = [ session dataTaskWithRequest:tagRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+       
+        if (!error) {
+            
+        
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        
+        if (httpResponse.statusCode == 200) {
+            
+      dispatch_async(dispatch_get_main_queue(), ^{
+          [[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:NO];
+          NSArray *tags = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:NULL];
+          
+          self.tags = tags;
+      });
+          
+            
+            
+            
+        }
+        else{
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error while getting content " message:[NSString stringWithFormat:@"%ld %@ ",(long)httpResponse.statusCode,[NSHTTPURLResponse localizedStringForStatusCode:httpResponse.statusCode]] delegate:self cancelButtonTitle:@"Dissmiss" otherButtonTitles:nil];
+            [alert show];
+            [[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:NO];
+            
+        });
+            
+        }
+        
+        }
+        else{
+        
+            
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error while getting content " message:@"error in request" delegate:self cancelButtonTitle:@"Dissmiss" otherButtonTitles:nil];
+                [alert show];
+                
+                [[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:NO];
+            });
 
+        
+        }
+        
+    }];
+    
+    [getTagTask resume];
+    
+    
+    
+    
+    
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+
+        [self.navigationController popViewControllerAnimated:YES];
+}
 
 @end

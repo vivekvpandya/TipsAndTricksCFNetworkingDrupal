@@ -116,8 +116,23 @@ return @"Tag";
     if ([segue.identifier isEqualToString:@"selectTag"] ) {
         TnTSelectTagViewController *vc = (TnTSelectTagViewController *)segue.destinationViewController;
         vc.delegate = self;
-      
-        vc.selectedValue = [self.tip objectForKey:@"tag"];
+        if ([self.tip objectForKey:@"tag"]) {
+            
+            NSString *tagID = [NSString string];
+            
+            
+            NSString *tagString = [self.tip objectForKey:@"tag"];
+            if ([tagString isEqualToString:@"Linux"]) {
+                tagID = @"1";
+            }
+            else   {
+                tagID = @"2";
+            }
+            
+            
+            vc.selectedValue = @{@"name":[self.tip objectForKey:@"tag"],@"tid":tagID};
+        }
+        
         
         
     }
@@ -468,9 +483,9 @@ return @"Tag";
 }
 
 -(void)backButtonSelected:(id)object{
-    NSLog(@"ok delegation");
-
-    [self.tip setObject:object forKey:@"tag"];
+    
+    NSDictionary *tag = (NSDictionary *)object;
+    [self.tip setObject:[tag objectForKey:@"name"] forKey:@"tag"];
    // self.tag = object;
 }
 

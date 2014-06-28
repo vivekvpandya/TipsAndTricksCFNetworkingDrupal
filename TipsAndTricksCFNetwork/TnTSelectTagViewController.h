@@ -15,7 +15,7 @@
 
 @end
 
-@interface TnTSelectTagViewController : UIViewController <UITableViewDataSource , UITableViewDelegate>
+@interface TnTSelectTagViewController : UIViewController <UITableViewDataSource , UITableViewDelegate, UIAlertViewDelegate>
 @property (weak)id<TnTSelectTagProtocol> delegate;
-@property (nonatomic,strong) NSString *selectedValue;
+@property (nonatomic,strong) NSDictionary *selectedValue;
 @end
