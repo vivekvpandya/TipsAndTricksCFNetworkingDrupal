@@ -10,11 +10,12 @@
 #import "TnTTipViewController.h"
 #import "TipsandTricks.h"
 #import "User.h"
+#import "Tip.h"
 
 @interface TnTTableViewController ()
 
 @property (nonatomic,strong) NSURLSession *session; // to hold NSURLSession object
-@property (nonatomic,strong) NSArray *tipList; // to hold NSDictionaries that are created with JSON Response and each NSDictionary represent tip object i.e it will contain all the fields which you have enabled from RESTExport for the view
+@property (nonatomic,strong) NSMutableArray *tipList; // to hold NSDictionaries that are created with JSON Response and each NSDictionary represent tip object i.e it will contain all the fields which you have enabled from RESTExport for the view
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addTipButton;
 
 
@@ -27,6 +28,9 @@
     
     
     // this method creates NSURLRequest for appropriate URL and than create NSURLSessionData task to GET data.
+    
+ 
+    
         NSMutableURLRequest *request =  [[NSMutableURLRequest alloc]initWithURL:[TipsandTricks createURLForPath:@"fossTips/rest"]];
     [request setHTTPMethod:@"GET"];
     
@@ -65,7 +69,19 @@
                     }
                     else{
                     
-                        self.tipList = retrivedJSONObjectArray;
+                        //self.tipList = retrivedJSONObjectArray;
+                         [self.tipList removeAllObjects];    // clear all previous data
+                        
+                        for (NSMutableDictionary * tip in retrivedJSONObjectArray) {
+                            
+                            Tip *newTip = [[Tip alloc]initWithDictionary:tip];
+                            [self.tipList addObject:newTip];
+                            
+                        }
+                        
+                        [self.tableView reloadData];
+                    
+                    
                     }
                     
                     // stop UITableViewController's refreshControl animation
@@ -129,13 +145,23 @@
 
 }
 
--(void)setTipList:(NSArray *)tipList{
+-(NSMutableArray *)tipList{
+
+    if(!_tipList)
+        _tipList = [[NSMutableArray alloc]init];
+    
+    return _tipList;
+
+}
+
+/*-(void)setTipList:(NSMutableArray *)tipList{
 
     _tipList = tipList;
     [self.tableView reloadData];
 
 
 }
+ */
 
 -(NSURLSession *)session{
     if (!_session) {
@@ -167,12 +193,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.refreshControl addTarget:self action:@selector(getData) forControlEvents:UIControlEventValueChanged];
     
     User *user = [User sharedInstance];
     
     if (!user.name) {
         self.addTipButton.enabled =  NO;
     }
+    
+    
+    
     
     
     
@@ -221,7 +251,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-   
+    NSLog(@"%lu tips recieved ",(unsigned long)self.tipList.count);
     return [self.tipList count];
 }
 
@@ -230,8 +260,8 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"push" forIndexPath:indexPath];
     
-    cell.textLabel.text = [[self.tipList objectAtIndex:indexPath.row] objectForKey:@"title"];
-    cell.detailTextLabel.text = [[self.tipList objectAtIndex:indexPath.row] objectForKey:@"changed"];
+    cell.textLabel.text = [[self.tipList objectAtIndex:indexPath.row] valueForKeyPath:@"title"];
+    cell.detailTextLabel.text = [[self.tipList objectAtIndex:indexPath.row] valueForKeyPath:@"changed"];
     return cell;
 }
 
@@ -298,7 +328,7 @@
             if ([segue.identifier isEqualToString:@"push"]) {
                 
                 TnTTipViewController *newVC = (TnTTipViewController *)segue.destinationViewController;
-                newVC.tip = [[self.tipList objectAtIndex:[self.tableView indexPathForCell:sender].row] mutableCopy];
+                newVC.tip = [self.tipList objectAtIndex:[self.tableView indexPathForCell:sender].row];
                 
             }
         }
@@ -306,6 +336,5 @@
     
     
 }
-
 
 @end

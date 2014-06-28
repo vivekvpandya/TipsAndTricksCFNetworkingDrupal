@@ -46,12 +46,12 @@
   
     if (self.tip) {
 
-        self.tipTitle.text = [self.tip objectForKey:@"title"];
-        self.tipLastUpdate.text = [self.tip objectForKey:@"changed"];
-        [self.tipBody loadHTMLString:[self.tip objectForKey:@"body"] baseURL:nil];
+        self.tipTitle.text = [self.tip valueForKeyPath:@"title"];
+        self.tipLastUpdate.text = [self.tip valueForKeyPath:@"changed"];
+        [self.tipBody loadHTMLString:[self.tip valueForKeyPath:@"body"] baseURL:nil];
         self.editorSwitch.hidden = YES;
         self.tipTextView.hidden = YES;
-        self.tipTextView.text = [self.tip objectForKey:@"body"];
+        self.tipTextView.text = [self.tip valueForKeyPath:@"body"];
         
         
         
@@ -122,7 +122,7 @@
 
         
         
-            tagVC.selectedValue = [self.tip objectForKey:@"tag"];
+            tagVC.selectedValue = [self.tip valueForKeyPath:@"tag"];
         
         
         
@@ -192,7 +192,7 @@
     switch (indexPath.section) {
         case TAG_SECTION:
             cell = [tableView dequeueReusableCellWithIdentifier:@"tag" forIndexPath:indexPath];
-            cell.detailTextLabel.text = [self.tip objectForKey:@"tag"];
+            cell.detailTextLabel.text = [self.tip valueForKeyPath:@"tag"];
             if (self.editing) {
                 [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
                
@@ -247,7 +247,7 @@
         NSString *tagID = [NSString string];
         
         
-            NSString *tagString = [self.tip objectForKey:@"tag"];
+            NSString *tagString = [self.tip valueForKeyPath:@"tag"];
             if ([tagString isEqualToString:@"Linux"]) {
                 tagID = @"1";
             }
@@ -270,7 +270,7 @@
         NSData *jsonData =  [NSJSONSerialization dataWithJSONObject:tipDictionary options:kNilOptions error:&conversionerror];
         
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-        NSMutableURLRequest *postRequestURL = [NSMutableURLRequest requestWithURL:[TipsandTricks createURLForNodeID:[self.tip objectForKey:@"nid"]]];
+        NSMutableURLRequest *postRequestURL = [NSMutableURLRequest requestWithURL:[TipsandTricks createURLForNodeID:[self.tip valueForKeyPath:@"nid"]]];
         [postRequestURL setHTTPMethod:@"PATCH"];
         [postRequestURL setHTTPBody:jsonData];
         
@@ -595,13 +595,12 @@
     
     if (user.basicAuthString) {
        
-        NSMutableURLRequest *deleteRequest  = [[NSMutableURLRequest alloc]initWithURL:[TipsandTricks createURLForNodeID:[self.tip objectForKey:@"nid"]]];
+        NSMutableURLRequest *deleteRequest  = [[NSMutableURLRequest alloc]initWithURL:[TipsandTricks createURLForNodeID:[self.tip valueForKeyPath:@"nid"]]];
         
         [deleteRequest setHTTPMethod:@"DELETE"];
         
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-        
-        
+        [config setHTTPAdditionalHeaders:@{@"Authorization":user.basicAuthString}];
         
         NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
         
@@ -692,7 +691,7 @@
     
     if (self.editing) {
         
-        [self.tip setValue:object forKey:@"tag"];
+        [self.tip setValue:object forKeyPath:@"tag"];
         
         [self.tableView reloadData];
         

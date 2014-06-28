@@ -30,7 +30,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+   
     // Do any additional setup after loading the view.
+}
+- (IBAction)cancle:(id)sender {
+    
+    
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -67,7 +76,12 @@
     
     
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-    [config setHTTPAdditionalHeaders:@{@"Content-Type":@"application/hal+json"}];
+    [config setHTTPAdditionalHeaders:@{@"Content-Type":@"application/hal+json",@"Authorization":@"Basic cm9vdDprfjNpVHJhaEQ="}];
+    
+    // here we need to pass root credential with user POST request
+    // It shoud not be like that
+    
+    
     
     NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
     
@@ -85,8 +99,10 @@
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.activityIndicator stopAnimating];
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Sign Successful" message:@"A mail with further details has been sent to your mail id" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Sign-up Successful" message:@"A mail with further details has been sent to your mail id" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
                 [alert show];
+                
+                
 
             });
             
@@ -100,6 +116,7 @@
                 
                 UIAlertView *alertForUnprocessable = [[UIAlertView alloc]initWithTitle:@"Can not create user" message:responseString delegate:self
                                                                      cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+                alertForUnprocessable.tag = 1;
                 [alertForUnprocessable show];
             });
             
@@ -115,6 +132,7 @@
                 
                 UIAlertView *alertForFaliure = [[UIAlertView alloc]initWithTitle:@"Can not create user" message:responseString delegate:self
                                                                cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+                alertForFaliure.tag = 2;
                 
                 [alertForFaliure show];
             });
@@ -131,6 +149,7 @@
                 UIAlertView *alertForError = [[UIAlertView alloc]initWithTitle:@"Can not create user" message:error.localizedDescription delegate:self
                                                              cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
                 
+                alertForError.tag = 3;
                 [alertForError show];
 
                 
@@ -165,6 +184,16 @@
 }
 */
 
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+
+    if (buttonIndex == 0){
+    
+        [self dismissViewControllerAnimated:YES completion:nil];
+    
+    }
+
+}
 
 
 

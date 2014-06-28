@@ -152,7 +152,7 @@
     [self.passwordTextField resignFirstResponder];
 }
 
-- (IBAction)loadSignUpView:(id)sender {
+/*- (IBAction)loadSignUpView:(id)sender {
     
     
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
@@ -162,5 +162,5 @@
     
 }
 
-
+*/
 @end

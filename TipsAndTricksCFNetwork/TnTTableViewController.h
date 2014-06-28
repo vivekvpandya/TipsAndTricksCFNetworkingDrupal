@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TnTTableViewController : UITableViewController
+@interface TnTTableViewController : UITableViewController <NSURLSessionDataDelegate>
 
 
 

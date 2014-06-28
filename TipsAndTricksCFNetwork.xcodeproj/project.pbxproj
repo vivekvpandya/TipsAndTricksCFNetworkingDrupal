@@ -31,6 +31,7 @@
 		CF707B56192D09380016E420 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF707B4F192D09380016E420 /* LoginViewController.m */; };
 		CF707B57192D09380016E420 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = CF707B51192D09380016E420 /* User.m */; };
 		CF707B58192D09380016E420 /* NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF707B53192D09380016E420 /* NavigationController.m */; };
+		CF7DF8421956A27E00697F49 /* Tip.m in Sources */ = {isa = PBXBuildFile; fileRef = CF7DF8411956A27E00697F49 /* Tip.m */; };
 		CF811307194E075300F3CB8E /* TnTSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF811306194E075300F3CB8E /* TnTSignUpViewController.m */; };
 		CFD959FD1935A8750011B68F /* JSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CFD959FC1935A8750011B68F /* JSONModel.m */; };
 /* End PBXBuildFile section */
@@ -84,6 +85,8 @@
 		CF707B51192D09380016E420 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		CF707B52192D09380016E420 /* NavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationController.h; sourceTree = "<group>"; };
 		CF707B53192D09380016E420 /* NavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationController.m; sourceTree = "<group>"; };
+		CF7DF8401956A27E00697F49 /* Tip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tip.h; sourceTree = "<group>"; };
+		CF7DF8411956A27E00697F49 /* Tip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tip.m; sourceTree = "<group>"; };
 		CF811305194E075300F3CB8E /* TnTSignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TnTSignUpViewController.h; sourceTree = "<group>"; };
 		CF811306194E075300F3CB8E /* TnTSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TnTSignUpViewController.m; sourceTree = "<group>"; };
 		CFD959FB1935A8750011B68F /* JSONModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONModel.h; sourceTree = "<group>"; };
@@ -217,10 +220,12 @@
 				CF707B4A192D09380016E420 /* SGKeychain.h */,
 				CF707B4B192D09380016E420 /* SGKeychain.m */,
 				CF707B50192D09380016E420 /* User.h */,
-				CFD959FB1935A8750011B68F /* JSONModel.h */,
 				CFD959FC1935A8750011B68F /* JSONModel.m */,
+				CFD959FB1935A8750011B68F /* JSONModel.h */,
 				CF707B51192D09380016E420 /* User.m */,
 				CF1919D71914AAA100BD9515 /* TipsandTricks.m */,
+				CF7DF8401956A27E00697F49 /* Tip.h */,
+				CF7DF8411956A27E00697F49 /* Tip.m */,
 			);
 			name = ModalandAPI;
 			sourceTree = "<group>";
@@ -342,6 +347,7 @@
 				CF66C0F8193E29CF006A9CE2 /* TnTSelectTagViewController.m in Sources */,
 				CF707B54192D09380016E420 /* SGKeychain.m in Sources */,
 				CF3CFC9519111B03000C7C83 /* TnTAppDelegate.m in Sources */,
+				CF7DF8421956A27E00697F49 /* Tip.m in Sources */,
 				CF811307194E075300F3CB8E /* TnTSignUpViewController.m in Sources */,
 				CFD959FD1935A8750011B68F /* JSONModel.m in Sources */,
 				CF707B58192D09380016E420 /* NavigationController.m in Sources */,

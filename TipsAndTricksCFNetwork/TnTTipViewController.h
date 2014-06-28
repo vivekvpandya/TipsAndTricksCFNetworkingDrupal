@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "TnTSelectTagViewController.h"
+#import "Tip.h"
 @interface TnTTipViewController : UIViewController <UITableViewDataSource,UITableViewDelegate, UIAlertViewDelegate, TnTSelectTagProtocol, UIWebViewDelegate>
 
-@property (nonatomic,strong) NSMutableDictionary *tip;
+@property (nonatomic,strong) Tip *tip;
 @end

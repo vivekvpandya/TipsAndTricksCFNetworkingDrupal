@@ -30,10 +30,71 @@
     NSArray *credentials = [SGKeychain usernamePasswordForServiceName:@"Drupal 8" accessGroup:nil error:&fetchPasswordError];
     if (credentials != nil ) {
         
+        dispatch_semaphore_t  semaphore = dispatch_semaphore_create(0);
         
         
-        [TipsandTricks performLoginWithUsername:[credentials objectAtIndex:0] andPassword:[credentials objectAtIndex:1]];
+        NSString *basicAuthString = [TipsandTricks basicAuthStringforUsername:credentials[0] Password:credentials[1]];
         
+        NSURL *loginRequestURL = [TipsandTricks createURLForPath:@"user/details"];
+        
+        NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+        [config setHTTPAdditionalHeaders:@{@"Authorization": basicAuthString}];
+        
+        NSMutableURLRequest *loginRequest = [NSMutableURLRequest requestWithURL:loginRequestURL];
+        
+        NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
+        
+        NSURLSessionDataTask *loginTask = [session dataTaskWithRequest:loginRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            
+            
+            if (!error) {
+                
+                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                
+                if(httpResponse.statusCode == 200) {
+                    
+                    
+                    NSDictionary *retrievedJSON = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+                    NSMutableDictionary *userDictionary = [retrievedJSON mutableCopy];
+                    [userDictionary setObject:basicAuthString forKey:@"basicAuthString"];
+                    User *user = [User sharedInstance];
+                    [user fillUserWithUserJSONObject:userDictionary];
+                    
+                    
+                    
+                    
+                }
+                else if(httpResponse.statusCode == 403 ){
+                    
+                    // this is the case when user has changed credential details form the iste it self
+                    NSError *deleteError;
+                    [SGKeychain deletePasswordandUserNameForServiceName:@"Drupal 8" accessGroup:nil error:&deleteError];
+                    
+                    
+                    
+                    
+                }
+                
+                
+            }
+            else{
+                
+                
+                NSLog(@"error -> %@",error.localizedDescription);
+                
+                
+            }
+            
+            
+            dispatch_semaphore_signal(semaphore);
+            
+        }];
+        
+        [loginTask resume];
+        
+
+        
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
         
         
         
