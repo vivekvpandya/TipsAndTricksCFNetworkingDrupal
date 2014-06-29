@@ -124,13 +124,13 @@
 
     NSMutableURLRequest *tagRequest = [NSMutableURLRequest requestWithURL:[TipsandTricks createURLForPath:@"vocabulary/foss"]];
     
-    NSURLSessionConfiguration *config  = [NSURLSessionConfiguration defaultSessionConfiguration];
+  //  NSURLSessionConfiguration *config  = [NSURLSessionConfiguration defaultSessionConfiguration];
     [tagRequest setHTTPMethod:@"GET"];
     
     
     [tagRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
+    NSURLSession *session = [NSURLSession sharedSession];
     
     
     NSURLSessionDataTask *getTagTask = [ session dataTaskWithRequest:tagRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {

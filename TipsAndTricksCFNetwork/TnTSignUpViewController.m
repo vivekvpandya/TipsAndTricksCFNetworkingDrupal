@@ -48,6 +48,8 @@
     // Dispose of any resources that can be recreated.
 }
 - (IBAction)signup:(id)sender {
+    [self.usernameField resignFirstResponder];
+    [self.emailField resignFirstResponder];
     
     NSString *username = [self.usernameField text];
     NSString *email = [self.emailField text];
@@ -67,23 +69,25 @@
     		}
         },
         @"name":@[@{@"value":username}],
-        @"mail":@[@{@"value":email}]
+        @"mail":@[@{@"value":email}],
+        @"status":@[@{@"value":@"0"}] // 0 -> blocked state 1 -> active state
+        
         
         };
     NSData *requestBodyData  = [NSJSONSerialization dataWithJSONObject:requestBodyDictionary options:kNilOptions error:NULL];
     
     [userCreationRequest setHTTPBody:requestBodyData];
+    [userCreationRequest setAllHTTPHeaderFields:@{@"Content-Type":@"application/hal+json",@"Authorization":@"Basic cm9vdDprfjNpVHJhaEQ="}];
     
-    
-    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-    [config setHTTPAdditionalHeaders:@{@"Content-Type":@"application/hal+json",@"Authorization":@"Basic cm9vdDprfjNpVHJhaEQ="}];
+    //NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+   // [config setHTTPAdditionalHeaders:@{@"Content-Type":@"application/hal+json",@"Authorization":@"Basic cm9vdDprfjNpVHJhaEQ="}];
     
     // here we need to pass root credential with user POST request
     // It shoud not be like that
     
     
     
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
+    NSURLSession *session = [NSURLSession sharedSession];
     
     NSURLSessionDataTask *POSTUserTask = [session dataTaskWithRequest:userCreationRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         

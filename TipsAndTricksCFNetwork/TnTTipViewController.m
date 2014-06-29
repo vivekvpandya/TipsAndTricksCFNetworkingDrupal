@@ -607,11 +607,11 @@
         NSMutableURLRequest *deleteRequest  = [[NSMutableURLRequest alloc]initWithURL:[TipsandTricks createURLForNodeID:[self.tip valueForKeyPath:@"nid"]]];
         
         [deleteRequest setHTTPMethod:@"DELETE"];
+        [deleteRequest setValue:user.basicAuthString forHTTPHeaderField:@"Authorization"];
+      
+
         
-        NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-        [config setHTTPAdditionalHeaders:@{@"Authorization":user.basicAuthString}];
-        
-        NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
+        NSURLSession *session = [NSURLSession sharedSession];
         
         NSURLSessionDataTask *deleteTask = [session dataTaskWithRequest:deleteRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             

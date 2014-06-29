@@ -70,12 +70,13 @@
     
     __block NSMutableDictionary *userDictionary = nil;
     
-    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-    [config setHTTPAdditionalHeaders:@{@"Authorization":basicAuthString}];
+   // NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    //[config setHTTPAdditionalHeaders:];
     
-    self.session = [NSURLSession sessionWithConfiguration:config];
+    self.session = [NSURLSession sharedSession];
     
-    NSURLRequest *request = [NSURLRequest requestWithURL:[TipsandTricks createURLForPath:@"user/details"]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[TipsandTricks createURLForPath:@"user/details"]];
+    [request setAllHTTPHeaderFields:@{@"Authorization":basicAuthString}];
     
     NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
      

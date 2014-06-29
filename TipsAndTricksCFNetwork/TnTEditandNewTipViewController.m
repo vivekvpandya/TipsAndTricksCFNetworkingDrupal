@@ -175,15 +175,18 @@ return @"Tag";
     NSError *conversionerror;
     NSData *jsonData =  [NSJSONSerialization dataWithJSONObject:tipDictionary options:kNilOptions error:&conversionerror];
     
-    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+   // NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSMutableURLRequest *postRequestURL = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://tntfoss-vivekvpandya.rhcloud.com/entity/node"]];
     [postRequestURL setHTTPMethod:@"POST"];
     [postRequestURL setHTTPBody:jsonData];
+        User *user = [User sharedInstance];
+    [postRequestURL setValue:user.basicAuthString forHTTPHeaderField:@"Authorization"];
+    [postRequestURL setValue:@"application/hal+json" forHTTPHeaderField:@"Content-Type"];
     
-    User *user = [User sharedInstance];
+
     
-    [config setHTTPAdditionalHeaders:@{@"Authorization":user.basicAuthString,@"Content-Type":@"application/hal+json"}];
-    NSURLSession *session  = [NSURLSession sessionWithConfiguration:config];
+   // [config setHTTPAdditionalHeaders:@{@"Authorization":user.basicAuthString,@"Content-Type":@"application/hal+json"}];
+    NSURLSession *session  = [NSURLSession sharedSession];
     
     NSURLSessionDataTask *postTask = [session dataTaskWithRequest:postRequestURL completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
