@@ -17,6 +17,7 @@
 @property (nonatomic,strong) NSURLSession *session; // to hold NSURLSession object
 @property (nonatomic,strong) NSMutableArray *tipList; // to hold NSDictionaries that are created with JSON Response and each NSDictionary represent tip object i.e it will contain all the fields which you have enabled from RESTExport for the view
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addTipButton;
+@property (weak, nonatomic) IBOutlet UIProgressView *processView;
 
 
 
@@ -37,6 +38,8 @@
     if (self.session){
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         // use of GCD and Multithreading so Main Queue will not block untill data is retrieved.
+     
+        
         
         dispatch_queue_t fatchQ = dispatch_queue_create("fetch queue", NULL);
         dispatch_async(fatchQ, ^{
@@ -133,7 +136,8 @@
         });
         
         
-      
+        
+
         
         
     }
@@ -141,6 +145,7 @@
         NSLog(@"I'm not getting Session object");
         
     }
+         
     
 
 }
@@ -171,7 +176,11 @@
         
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration ephemeralSessionConfiguration];
         [config setHTTPAdditionalHeaders:@{@"Accept":@"application/json"}];
-        _session = [NSURLSession sessionWithConfiguration:config];
+        _session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:[NSOperationQueue mainQueue]] ;
+        
+        [config setURLCache:[NSURLCache sharedURLCache]];
+        [config setRequestCachePolicy:NSURLRequestReloadRevalidatingCacheData];
+        
         
     
         
@@ -336,5 +345,8 @@
     
     
 }
+
+
+
 
 @end

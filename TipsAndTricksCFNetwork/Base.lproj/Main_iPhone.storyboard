@@ -12,9 +12,16 @@
                         <rect key="frame" x="0.0" y="44" width="320" height="475"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <progressView key="tableHeaderView" hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" progress="0.5" id="4Qr-DY-bYi">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="3"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="progressTintColor" red="0.02352941222" green="0.47058823700000002" blue="0.74509805439999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="trackTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </progressView>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="push" textLabel="Pga-v0-PXe" detailTextLabel="TlE-Hw-SWI" style="IBUITableViewCellStyleSubtitle" id="SgP-M3-plt">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="25" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SgP-M3-plt" id="6Ml-HV-jQB">
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -42,7 +49,7 @@
                             </tableViewCell>
                         </prototypes>
                         <connections>
-                            <outlet property="dataSource" destination="0hN-id-kyq" id="4zW-Xi-Jn9"/>
+                            <outlet property="dataSource" destination="0hN-id-kyq" id="eqg-l2-CZY"/>
                             <outlet property="delegate" destination="0hN-id-kyq" id="GkV-dM-HB8"/>
                         </connections>
                     </tableView>
@@ -63,6 +70,7 @@
                     </refreshControl>
                     <connections>
                         <outlet property="addTipButton" destination="iwM-Lg-zgv" id="cCC-jt-fN5"/>
+                        <outlet property="processView" destination="4Qr-DY-bYi" id="1Tf-8E-8RT"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LIz-MO-4lf" userLabel="First Responder" sceneMemberID="firstResponder"/>

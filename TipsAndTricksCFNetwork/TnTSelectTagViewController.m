@@ -12,7 +12,7 @@
 
 @interface TnTSelectTagViewController ()
 
-@property (nonatomic,strong) NSArray *tags; // Actually you should load all related taxonomy terms here from your site but currently Drupal 8 has no REST api for that
+@property (nonatomic,strong) NSArray *tags; // Actually you should load all related taxonomy terms here from your site, for that can create a REST export to a view that gives taxonomy terms for particular vocabulary for my site I have created /vocabulary/foss
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
@@ -123,6 +123,8 @@
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 
     NSMutableURLRequest *tagRequest = [NSMutableURLRequest requestWithURL:[TipsandTricks createURLForPath:@"vocabulary/foss"]];
+  
+    
     
   //  NSURLSessionConfiguration *config  = [NSURLSessionConfiguration defaultSessionConfiguration];
     [tagRequest setHTTPMethod:@"GET"];
@@ -133,57 +135,66 @@
     NSURLSession *session = [NSURLSession sharedSession];
     
     
-    NSURLSessionDataTask *getTagTask = [ session dataTaskWithRequest:tagRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-       
-        if (!error) {
-            
+    dispatch_queue_t fatchQ = dispatch_queue_create("fetchQ", NULL);
+    
+    dispatch_async(fatchQ, ^{
         
-        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         
-        if (httpResponse.statusCode == 200) {
+        NSURLSessionDataTask *getTagTask = [ session dataTaskWithRequest:tagRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             
-      dispatch_async(dispatch_get_main_queue(), ^{
-          [[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:NO];
-          NSArray *tags = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:NULL];
-          
-          self.tags = tags;
-      });
-          
-            
-            
-            
-        }
-        else{
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error while getting content " message:[NSString stringWithFormat:@"%ld %@ ",(long)httpResponse.statusCode,[NSHTTPURLResponse localizedStringForStatusCode:httpResponse.statusCode]] delegate:self cancelButtonTitle:@"Dissmiss" otherButtonTitles:nil];
-            [alert show];
-            [[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:NO];
-            
-        });
-            
-        }
-        
-        }
-        else{
-        
-            
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
+            if (!error) {
                 
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error while getting content " message:@"error in request" delegate:self cancelButtonTitle:@"Dissmiss" otherButtonTitles:nil];
-                [alert show];
                 
-                [[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:NO];
-            });
+                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                
+                if (httpResponse.statusCode == 200) {
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:NO];
+                        NSArray *tags = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:NULL];
+                        
+                        self.tags = tags;
+                    });
+                    
+                    
+                    
+                    
+                }
+                else{
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        
+                        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error while getting content " message:[NSString stringWithFormat:@"%ld %@ ",(long)httpResponse.statusCode,[NSHTTPURLResponse localizedStringForStatusCode:httpResponse.statusCode]] delegate:self cancelButtonTitle:@"Dissmiss" otherButtonTitles:nil];
+                        [alert show];
+                        [[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:NO];
+                        
+                    });
+                    
+                }
+                
+            }
+            else{
+                
+                
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error while getting content " message:@"error in request" delegate:self cancelButtonTitle:@"Dissmiss" otherButtonTitles:nil];
+                    [alert show];
+                    
+                    [[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:NO];
+                });
+                
+                
+            }
+            
+        }];
+        
+        [getTagTask resume];
+        
 
         
-        }
-        
-    }];
-    
-    [getTagTask resume];
+    });
     
     
     
