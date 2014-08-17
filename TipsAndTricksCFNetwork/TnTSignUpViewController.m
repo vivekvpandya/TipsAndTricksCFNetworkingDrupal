@@ -77,7 +77,7 @@
     NSData *requestBodyData  = [NSJSONSerialization dataWithJSONObject:requestBodyDictionary options:kNilOptions error:NULL];
     
     [userCreationRequest setHTTPBody:requestBodyData];
-    [userCreationRequest setAllHTTPHeaderFields:@{@"Content-Type":@"application/hal+json",@"Authorization":@"Basic cm9vdDprfjNpVHJhaEQ="}];
+    [userCreationRequest setAllHTTPHeaderFields:@{@"Content-Type":@"application/hal+json",@"Authorization":@"admin http basic auth string "}];
     
     //NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
    // [config setHTTPAdditionalHeaders:@{@"Content-Type":@"application/hal+json",@"Authorization":@"Basic cm9vdDprfjNpVHJhaEQ="}];
