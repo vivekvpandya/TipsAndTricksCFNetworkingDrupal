@@ -78,10 +78,7 @@
     
     [userCreationRequest setHTTPBody:requestBodyData];
     [userCreationRequest setAllHTTPHeaderFields:@{@"Content-Type":@"application/hal+json",@"Authorization":@"admin http basic auth string "}];
-    
-    //NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-   // [config setHTTPAdditionalHeaders:@{@"Content-Type":@"application/hal+json",@"Authorization":@"Basic cm9vdDprfjNpVHJhaEQ="}];
-    
+      
     // here we need to pass root credential with user POST request
     // It shoud not be like that
     
